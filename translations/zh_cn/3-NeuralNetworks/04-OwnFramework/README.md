@@ -1,86 +1,87 @@
-# Introduction to Neural Networks. Multi-Layered Perceptron
+### 神经网络简介：多层感知器
 
-In the previous section, you learned about the simplest neural network model - one-layered perceptron, a linear two-class classification model.
+在上节中，你了解了最简单的神经网络模型 - 单层感知器，这是一个线性两类分类模型。
 
-In this section we will extend this model into a more flexible framework, allowing us to:
+在本节中，我们将把这个模型扩展到一个更灵活的框架，使我们能够：
 
-* perform **multi-class classification** in addition to two-class
-* solve **regression problems** in addition to classification
-* separate classes that are not linearly separable
+- 除了两类分类之外，执行**多类别分类**
+- 除了分类之外，解决 **回归问题**
+- 分离不可线性分离的类别
 
-We will also develop our own modular framework in Python that will allow us to construct different neural network architectures.
+我们还将在 Python 中开发我们自己的模块化框架，这将使我们能够构建不同的神经网络架构。
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/104)
+##### [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/104)
 
-## Formalization of Machine Learning
+##### 机器学习的形式化
 
-Let's start with formalizing the Machine Learning problem. Suppose we have a training dataset **X** with labels **Y**, and we need to build a model *f* that will make most accurate predictions. The quality of predictions is measured by **Loss function** &lagran;. The following loss functions are often used:
+让我们从形式化机器学习问题开始。假设我们有一个带有标签 **Y** 的训练数据集 **X**，我们需要构建一个模型 f，它将做出最准确的预测。预测的质量由**损失函数**  ℒ 衡量。以下是常用的损失函数：
 
-* For regression problem, when we need to predict a number, we can use **absolute error** &sum;<sub>i</sub>|f(x<sup>(i)</sup>)-y<sup>(i)</sup>|, or **squared error** &sum;<sub>i</sub>(f(x<sup>(i)</sup>)-y<sup>(i)</sup>)<sup>2</sup>
-* For classification, we use **0-1 loss** (which is essentially the same as **accuracy** of the model), or **logistic loss**.
+- 对于回归问题，当我们需要预测一个数字时，我们可以使用 绝对误差 ∑<sub>i</sub>|f(x<sup>(i)</sup>)-y<sup>(i)</sup>|，或者 平方误差 ∑<sub>i</sub>(f(x<sup>(i)</sup>)-y<sup>(i)</sup>)<sup>2</sup>。
+- 对于分类问题，我们使用 **0-1 损失**（本质上与模型的 **准确度** 相同）或 **逻辑损失**。
 
-For one-level perceptron, function *f* was defined as a linear function *f(x)=wx+b* (here *w* is the weight matrix, *x* is the vector of input features, and *b* is bias vector). For different neural network architectures, this function can take more complex form.
+对于一级感知器，函数 f 被定义为线性函数 f(x)=wx+b（其中 w 是权重矩阵，x 是输入特征的向量，b 是偏差向量）。对于不同的神经网络架构，此函数可以采用更复杂的形式。
 
-> In the case of classification, it is often desirable to get probabilities of corresponding classes as network output. To convert arbitrary numbers to probabilities (eg. to normalize the output), we often use **softmax** function &sigma;, and the function *f* becomes *f(x)=&sigma;(wx+b)*
+> 在分类的情况下，通常希望获得网络输出作为相应类别的概率。为了将任意数字转换为概率（例如，为了对输出进行归一化），我们经常使用 **softmax**  函数 σ，并且函数 f 变为 f(x)=σ(wx+b)
 
-In the definition of *f* above, *w* and *b* are called **parameters** &theta;=⟨*w,b*⟩. Given the dataset ⟨**X**,**Y**⟩, we can compute an overall error on the whole dataset as a function of parameters &theta;.
+在上面的 f 定义中，w 和 b 被称为 **参数** θ=⟨w,b⟩。给定数据集 ⟨**X**,**Y**⟩，我们可以计算整个数据集上的总体误差，作为参数 θ 的函数。
 
-> ✅ **The goal of neural network training is to minimize the error by varying parameters &theta;**
+> ✅ 神经网络训练的目标是通过改变参数 θ 来最小化误差
 
-## Gradient Descent Optimization
+##### 梯度下降优化
 
-There is a well-known method of function optimization called **gradient descent**. The idea is that we can compute a derivative (in multi-dimensional case call **gradient**) of loss function with respect to parameters, and vary parameters in such a way that the error would decrease. This can be formalized as follows:
+有一个众所周知的方法来进行函数优化，称为**梯度下降**。其思想是我们可以计算损失函数对参数的导数（在多维情况下称为梯度），并以这种方式改变参数，从而减少误差。这可以形式化为以下内容：
 
-* Initialize parameters by some random values w<sup>(0)</sup>, b<sup>(0)</sup>
-* Repeat the following step many times:
-    - w<sup>(i+1)</sup> = w<sup>(i)</sup>-&eta;&part;&lagran;/&part;w
-    - b<sup>(i+1)</sup> = b<sup>(i)</sup>-&eta;&part;&lagran;/&part;b
+- 用一些随机值 w (0) , b (0) 初始化参数
+- 重复以下步骤多次：
+  - w(i+1) = w(i)-η∂ℒ/∂w
+  - b(i+1) = b(i)-η∂ℒ/∂b
 
-During training, the optimization steps are supposed to be calculated considering the whole dataset (remember that loss is calculated as a sum through all training samples). However, in real life we take small portions of the dataset called **minibatches**, and calculate gradients based on a subset of data. Because subset is taken randomly each time, such method is called **stochastic gradient descent** (SGD).
+在训练期间，优化步骤应该考虑整个数据集来计算（记住，损失是通过所有训练样本的总和计算的）。然而，在实际生活中，我们取数据集的小部分，称为**小批量（minibatches）**，并根据数据子集计算梯度。由于每次随机抽取子集，因此这种方法称为**随机梯度下降**(SGD)。
 
-## Multi-Layered Perceptrons and Backpropagation
+##### 多层感知器和反向传播
 
-One-layer network, as we have seen above, is capable of classifying linearly separable classes. To build a richer model, we can combine several layers of the network. Mathematically it would mean that the function *f* would have a more complex form, and will be computed in several steps:
-* z<sub>1</sub>=w<sub>1</sub>x+b<sub>1</sub>
-* z<sub>2</sub>=w<sub>2</sub>&alpha;(z<sub>1</sub>)+b<sub>2</sub>
-* f = &sigma;(z<sub>2</sub>)
+如上所述，单层网络能够对线性可分类别进行分类。为了构建更丰富的模型，我们可以组合网络的多个层。从数学上来说，这意味着函数 f 将具有更复杂的形式，并且将分几个步骤计算：
 
-Here, &alpha; is a **non-linear activation function**, &sigma; is a softmax function, and parameters &theta;=<*w<sub>1</sub>,b<sub>1</sub>,w<sub>2</sub>,b<sub>2</sub>*>.
+- z1=w1x+b1
+- z2=w2α(z1)+b2
+- f = σ(z2)
 
-The gradient descent algorithm would remain the same, but it would be more difficult to calculate gradients. Given the chain differentiation rule, we can calculate derivatives as:
+此处，α 是**非线性激活函数**，σ 是 softmax 函数，参数 θ= ,b 1 ,w 2 ,b 2 >。
 
-* &part;&lagran;/&part;w<sub>2</sub> = (&part;&lagran;/&part;&sigma;)(&part;&sigma;/&part;z<sub>2</sub>)(&part;z<sub>2</sub>/&part;w<sub>2</sub>)
-* &part;&lagran;/&part;w<sub>1</sub> = (&part;&lagran;/&part;&sigma;)(&part;&sigma;/&part;z<sub>2</sub>)(&part;z<sub>2</sub>/&part;&alpha;)(&part;&alpha;/&part;z<sub>1</sub>)(&part;z<sub>1</sub>/&part;w<sub>1</sub>)
+梯度下降算法将保持不变，但计算梯度会更困难。给定链式求导法则，我们可以计算导数为：
 
-> ✅ The chain differentiation rule is used to calculate derivatives of the loss function with respect to parameters.
+- ∂ℒ/∂w2 = (∂ℒ/∂σ)(∂σ/∂z2)(∂z2/∂w2)
+- ∂ℒ/∂w1 = (∂ℒ/∂σ)(∂σ/∂z2)(∂z2/∂α)(∂α/∂z1)(∂z1/∂w1)
 
-Note that the left-most part of all those expressions is the same, and thus we can effectively calculate derivatives starting from the loss function and going "backwards" through the computational graph. Thus the method of training a multi-layered perceptron is called **backpropagation**, or 'backprop'.
+> ✅ 使用链式求导法则计算损失函数对参数的导数。
 
-<img alt="compute graph" src="images/ComputeGraphGrad.png"/>
+请注意，所有这些表达式的最左侧部分是相同的，因此我们可以从损失函数开始并通过计算图“向后”计算导数。因此，训练多层感知器的方法称为反向传播或 **反向传播** 。
 
-> TODO: image citation
+[![compute graph](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/images/ComputeGraphGrad.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/images/ComputeGraphGrad.png)
 
-> ✅ We will cover backprop in much more detail in our notebook example.  
+>  待办事项：图片引用
 
-## Conclusion
+> ✅ 我们将在笔记本示例中更详细地介绍反向传播。
 
-In this lesson, we have built our own neural network library, and we have used it for a simple two-dimensional classification task.
+#####  结论
 
-## 🚀 Challenge
+在本课中，我们构建了自己的神经网络库，并将其用于简单的二维分类任务。
 
-In the accompanying notebook, you will implement your own framework for building and training multi-layered perceptrons. You will be able to see in detail how modern neural networks operate.
+#####  🚀 挑战
 
-Proceed to the [OwnFramework](OwnFramework.ipynb) notebook and work through it.
+在附带的笔记本中，你将实现自己的框架来构建和训练多层感知器。你将能够详细了解现代神经网络如何运作。
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/204)
+继续查看 [OwnFramework](https://chat.openai.com/c/OwnFramework.ipynb) 笔记本并逐步完成它。
 
-## Review & Self Study
+##### [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/204)
 
-Backpropagation is a common algorithm used in AI and ML, worth studying [in more detail](https://wikipedia.org/wiki/Backpropagation)
+#####  复习与自学
 
-## [Assignment](lab/README.md)
+反向传播是人工智能和机器学习中常用的算法，值得[更详细地研究](https://wikipedia.org/wiki/Backpropagation)。
 
-In this lab, you are asked to use the framework you constructed in this lesson to solve MNIST handwritten digit classification.
+##### [ 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/lab/README.md)
 
-* [Instructions](lab/README.md)
-* [Notebook](lab/MyFW_MNIST.ipynb)
+在本实验中，要求你使用本课程中构建的框架来解决 MNIST 手写数字分类问题。
+
+- [ 说明](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/lab/README.md)
+- [ 笔记本](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/lab/MyFW_MNIST.ipynb)
