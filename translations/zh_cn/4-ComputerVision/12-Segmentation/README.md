@@ -1,66 +1,84 @@
-# Segmentation
+# 分词
 
-We have previously learned about Object Detection, which allows us to locate objects in the image by predicting their *bounding boxes*. However, for some tasks we do not only need bounding boxes, but also more precise object localization. This task is called  **segmentation**.
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/112)
 
-Segmentation can be viewed as **pixel classification**, whereas for **each** pixel of image we must predict its class (*background* being one of the classes). There are two main segmentation algorithms:
+我们之前已经了解了目标检测，它允许我们通过预测目标的边界框来定位图像中的目标。然而，对于某些任务，我们不仅需要边界框，还需要更精确的目标定位。此任务称为分割。
 
-* **Semantic segmentation** only tells the pixel class, and does not make a distinction between different objects of the same class
-* **Instance segmentation** divides classes into different instances.
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/112)
 
-For instance segmentation, these sheep are different objects, but for semantic segmentation all sheep are represented by one class.
 
-<img src="images/instance_vs_semantic.jpeg" width="50%">
 
-> Image from [this blog post](https://nirmalamurali.medium.com/image-classification-vs-semantic-segmentation-vs-instance-segmentation-625c33a08d50)
+分割可以看作是像素分类，而对于图像的每个像素，我们必须预测其类别（背景是类别之一）。有两种主要的分割算法：
 
-There are different neural architectures for segmentation, but they all have the same structure. In a way, it is similar to the autoencoder you learned about previously, but instead of deconstructing the original image, our goal is to deconstruct a **mask**. Thus, a segmentation network has the following parts:
+- 语义分割仅告诉像素类别，并且不会区分同一类别的不同对象
+- **Instance segmentation** divides classes into different instances. 重试 错误原因
 
-* **Encoder** extracts features from input image
-* **Decoder** transforms those features into the **mask image**, with the same size and number of channels corresponding to the number of classes.
+对于实例分割，这些羊是不同的对象，但对于语义分割，所有羊都由一个类别表示。
 
-<img src="images/segm.png" width="80%">
+[![img](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/12-Segmentation/images/instance_vs_semantic.jpeg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/12-Segmentation/images/instance_vs_semantic.jpeg)
 
-> Image from [this publication](https://arxiv.org/pdf/2001.05566.pdf)
+> 来自此博客文章的图片
 
-We should especially mention the loss function that is used for segmentation. When using classical autoencoders, we need to measure the similarity between two images, and we can use mean square error (MSE) to do that. In segmentation, each pixel in the target mask image represents the class number (one-hot-encoded along the third dimension), so we need to use loss functions specific for classification - cross-entropy loss, averaged over all pixels. If the mask is binary - **binary cross-entropy loss** (BCE) is used.
+用于分割的不同神经架构，但它们都具有相同的结构。在某种程度上，它类似于你之前了解过的自动编码器，但我们的目标不是解构原始图像，而是解构掩码。因此，分割网络具有以下部分：
 
-> ✅ One-hot encoding is a way to encode a class label into a vector of length equal to the number of classes. Take a look at [this article](https://datagy.io/sklearn-one-hot-encode/) on this technique.
+- 编码器从输入图像中提取特征
+- 解码器将这些特征转换为掩码图像，其大小和通道数与类别的数量相对应。
 
-## Segmentation for Medical Imaging
+[![img](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/12-Segmentation/images/segm.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/12-Segmentation/images/segm.png)
 
-In this lesson, we will see the segmentation in action by training the network to recognize human nevi (also known as moles) on medical images. We will be using <a href="https://www.fc.up.pt/addi/ph2%20database.html">PH<sup>2</sup> Database</a> of dermoscopy images as the image source. This dataset contains 200 images of three classes: typical nevus, atypical nevus, and melanoma. All images also contain a corresponding **mask** that outlines the nevus.
+> 来自此出版物的图片
 
-> ✅ This technique is particularly appropriate for this type of medical imaging, but what other real-world applications could you envision?
+我们应该特别提到用于分割的损失函数。在使用经典自动编码器时，我们需要测量两幅图像之间的相似性，我们可以使用均方误差 (MSE) 来做到这一点。在分割中，目标掩码图像中的每个像素都表示类号（沿第三维进行独热编码），因此我们需要使用特定于分类的损失函数 - 交叉熵损失，平均所有像素。如果掩码是二进制的 - 使用二进制交叉熵损失 (BCE)。
 
-<img alt="navi" src="images/navi.png"/>
+> ✅ 独热编码是一种将类标签编码为长度等于类数的向量的编码方式。看看这篇关于此技术的文章。
 
-> Image from the PH<sup>2</sup> Database
+## 医学影像分割
 
-We will train a model to segment any nevus from its background.
 
-## ✍️ Exercises: Semantic Segmentation
 
-Open the notebooks below to learn more about different semantic segmentation architectures, practice working with them, and see them in action.
+在本课程中，我们将通过训练网络识别医学图像上的人类痣（也称为痣）来了解分割的实际应用。我们将使用 PH 2 皮肤镜图像数据库作为图像源。此数据集包含 200 张三类图像：典型痣、非典型痣和黑色素瘤。所有图像还包含一个相应的轮廓线，勾勒出痣。
 
-* [Semantic Segmentation Pytorch](SemanticSegmentationPytorch.ipynb)
-* [Semantic Segmentation TensorFlow](SemanticSegmentationTF.ipynb)
+> ✅ 此技术特别适用于此类医学影像，但您还能设想哪些其他实际应用？
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/212)
+[![navi](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/12-Segmentation/images/navi.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/12-Segmentation/images/navi.png)
 
-## Conclusion
+> 来自 PH 2 数据库的图像
 
-Segmentation is a very powerful technique for image classification, moving beyond bounding boxes to pixel-level classification. It is a technique used in medical imaging, among other applications.
+我们将训练一个模型，将任何痣从其背景中分割出来。
 
-## 🚀 Challenge
+## ✍️ 练习：语义分割
 
-Body segmentation is just one of the common tasks that we can do with images of people. Another important tasks include **skeleton detection** and **pose detection**. Try out [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) library to see how pose detection can be used.
 
-## Review & Self Study
 
-This [wikipedia article](https://wikipedia.org/wiki/Image_segmentation) offers a good overview of the various applications of this technique. Learn more on your own about the subdomains of Instance segmentation and Panoptic segmentation in this field of inquiry.
+打开以下笔记本，以了解有关不同语义分割架构的更多信息，练习使用它们，并查看它们在实际中的应用。
 
-## [Assignment](lab/README.md)
+- [语义分割 Pytorch](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/12-Segmentation/SemanticSegmentationPytorch.ipynb)
+- [语义分割 TensorFlow](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/12-Segmentation/SemanticSegmentationTF.ipynb)
 
-In this lab, try **human body segmentation** using [Segmentation Full Body MADS Dataset](https://www.kaggle.com/datasets/tapakah68/segmentation-full-body-mads-dataset) from Kaggle.
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/212)
+
+
+
+##  结论
+
+
+
+分割是一种非常强大的图像分类技术，它超越了边界框，达到了像素级分类。它是一种用于医学成像和其他应用的技术。
+
+##  🚀 挑战
+
+
+
+身体分割只是我们可以用人物图像完成的常见任务之一。其他重要任务包括骨骼检测和姿势检测。尝试使用 OpenPose 库，了解如何使用姿势检测。
+
+##  复习与自学
+
+
+
+维基百科上的这篇文章很好地概述了该技术的各种应用。在此研究领域中，自行了解实例分割和全景分割的子域。
+
+## [ 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/12-Segmentation/lab/README.md)
+
+
+
+在此实验室中，尝试使用 Kaggle 上的分割全身 MADS 数据集进行人体分割。

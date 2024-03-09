@@ -1,19 +1,29 @@
-# Human Body Segmentation
+# 人体分割
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-In video production, for example, in weather forecasts, we often need to cut out a human image from camera and place it on top of some other footage. This is typically done using **chroma key** techniques, when a human is filmed in front of a uniform color background, which is then removed. In this lab, we will train a neural network model to cut out the human silhouette.
+人工智能初学者课程的实验作业。
 
-## The Dataset
+##  任务
 
-We will be using [Segmentation Full Body MADS Dataset](https://www.kaggle.com/datasets/tapakah68/segmentation-full-body-mads-dataset) from Kaggle. Download the dataset manually from Kaggle.
 
-## Stating Notebook
 
-Start the lab by opening [BodySegmentation.ipynb](BodySegmentation.ipynb)
+在视频制作中，例如在天气预报中，我们经常需要从摄像机中剪切出一个人像，并将其放在其他一些素材之上。这通常使用色度键控技术来完成，当一个人被拍摄在均匀颜色的背景前时，然后将其移除。在这个实验室中，我们将训练一个神经网络模型来剪切出人的剪影。
 
-## Takeaway
+##  数据集
 
-Body segmentation is just one of the common tasks that we can do with images of people. Another important tasks include **skeleton detection** and **pose detection**. Look into [OpenPose](https://github.com/CMU-Perceptual-Computing-Lab/openpose) library to see how those tasks can be implemented.
+
+
+我们将使用 Kaggle 上的 Segmentation Full Body MADS 数据集。从 Kaggle 手动下载数据集。
+
+##  说明笔记本
+
+
+
+通过打开 BodySegmentation.ipynb 开始实验
+
+##  外卖
+
+
+
+人体分割只是我们可以使用人物图像完成的常见任务之一。其他重要任务包括骨骼检测和姿势检测。查看 OpenPose 库，了解如何实现这些任务。

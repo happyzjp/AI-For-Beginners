@@ -1,176 +1,217 @@
-# Object Detection
+# 目标检测
 
-The image classification models we have dealt with so far took an image and produced a categorical result, such as the class 'number' in a MNIST problem. However, in many cases we do not want just to know that a picture portrays objects - we want to be able to determine their precise location. This is exactly the point of **object detection**.
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/111)
 
-![Object Detection](images/Screen_Shot_2016-11-17_at_11.14.54_AM.png)
+到目前为止，我们处理的图像分类模型获取图像并产生分类结果，例如 MNIST 问题中的“数字”类别。但是，在许多情况下，我们不仅想知道图片描绘了哪些物体，还希望能够确定它们的确切位置。这正是目标检测的意义所在。
 
-> Image from [YOLO v2 web site](https://pjreddie.com/darknet/yolov2/)
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/111)
 
-## A Naive Approach to Object Detection
 
-Assuming we wanted to find a cat on a picture, a very naive approach to object detection would be the following:
 
-1. Break the picture down to a number of tiles
-2. Run image classification on each tile.
-3. Those tiles that result in sufficiently high activation can be considered to contain the object in question.
+[![Object Detection](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/Screen_Shot_2016-11-17_at_11.14.54_AM.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/Screen_Shot_2016-11-17_at_11.14.54_AM.png)
 
-![Naive Object Detection](images/naive-detection.png)
+> 来自 YOLO v2 网站的图片
 
-> *Image from [Exercise Notebook](ObjectDetection-TF.ipynb)*
+## 目标检测的一种朴素方法
 
-However, this approach is far from ideal, because it only allows the algorithm to locate the object's bounding box very imprecisely. For more precise location, we need to run some sort of **regression** to predict the coordinates of bounding boxes - and for that, we need specific datasets.
 
-## Regression for Object Detection
 
-[This blog post](https://towardsdatascience.com/object-detection-with-neural-networks-a4e2c46b4491) has a great gentle introduction to detecting shapes.
+假设我们想在图片中找到一只猫，那么一种非常朴素的目标检测方法如下：
 
-## Datasets for Object Detection
+1. 将图片分解为多个图块
+2. 对每个图块运行图像分类。
+3. 激活度足够高的图块可以被认为包含目标物体。
 
-You might run across the following datasets for this task:
+[![Naive Object Detection](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/naive-detection.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/naive-detection.png)
 
-* [PASCAL VOC](http://host.robots.ox.ac.uk/pascal/VOC/) - 20 classes
-* [COCO](http://cocodataset.org/#home) - Common Objects in Context. 80 classes, bounding boxes and segmentation masks
+> *来自练习笔记本的图片*
 
-![COCO](images/coco-examples.jpg)
+但是，这种方法远非理想，因为它只允许算法非常不精确地定位对象的边界框。为了更精确地定位，我们需要运行某种回归来预测边界框的坐标，为此，我们需要特定的数据集。
 
-## Object Detection Metrics
+## 目标检测回归
 
-### Intersection over Union
 
-While for image classification it is easy to measure how well the algorithm performs, for object detection we need to measure both the correctness of the class, as well as the precision of the inferred bounding box location. For the latter, we use the so-called **Intersection over Union** (IoU), which measures how well two boxes (or two arbitrary areas) overlap.
 
-![IoU](images/iou_equation.png)
+这篇博文对形状检测有一个很好的温和介绍。
 
-> *Figure 2 from [this excellent blog post on IoU](https://pyimagesearch.com/2016/11/07/intersection-over-union-iou-for-object-detection/)*
+## 目标检测数据集
 
-The idea is simple - we divide the area of intersection between two figures by the area of their union. For two identical areas, IoU would be 1, while for completely disjointed areas it will be 0. Otherwise it will vary from 0 to 1. We typically only consider those bounding boxes for which IoU is over a certain value.
 
-### Average Precision
 
-Suppose we want to measure how well a given class of objects $C$ is recognized. To measure it, we use **Average Precision** metrics, which is calculated as follows:
+您可能会遇到以下数据集：
 
-1. Consider Precision-Recall curve shows the accuracy depending on a detection threshold value (from 0 to 1).
-2. Depending on the threshold, we will get more or less objects detected in the image, and different values of precision and recall.
-3. The curve will look like this:
+- PASCAL VOC - 20 类
+- COCO - 上下文中常见的对象。80 个类别、边界框和分割蒙版
 
-<img src="https://github.com/shwars/NeuroWorkshop/raw/master/images/ObjDetectionPrecisionRecall.png"/>
+[![COCO](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/coco-examples.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/coco-examples.jpg)
 
-> *Image from [NeuroWorkshop](http://github.com/shwars/NeuroWorkshop)*
+##  目标检测指标
 
-The average Precision for a given class $C$ is the area under this curve. More precisely, Recall axis is typically divided into 10 parts, and Precision is averaged over all those points:
 
-$$
-AP = {1\over11}\sum_{i=0}^{10}\mbox{Precision}(\mbox{Recall}={i\over10})
-$$
 
-### AP and IoU
+###  交并比
 
-We shall consider only those detections, for which IoU is above a certain value. For example, in PASCAL VOC dataset typically $\mbox{IoU Threshold} = 0.5$ is assumed, while in COCO AP is measured for different values of $\mbox{IoU Threshold}$.
 
-<img src="https://github.com/shwars/NeuroWorkshop/raw/master/images/ObjDetectionPrecisionRecallIoU.png"/>
 
-> *Image from [NeuroWorkshop](http://github.com/shwars/NeuroWorkshop)*
+对于图像分类，很容易衡量算法的执行情况，对于对象检测，我们需要衡量类的正确性以及推断出的边界框位置的精度。对于后者，我们使用所谓的交并比 (IoU)，它衡量两个框（或两个任意区域）的重叠程度。
 
-### Mean Average Precision - mAP
+[![IoU](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/iou_equation.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/iou_equation.png)
 
-The main metric for Object Detection is called **Mean Average Precision**, or **mAP**. It is the value of Average Precision, average across all object classes, and sometimes also over $\mbox{IoU Threshold}$. In more detail, the process of calculating **mAP** is described
-[in this blog post](https://medium.com/@timothycarlen/understanding-the-map-evaluation-metric-for-object-detection-a07fe6962cf3)), and also [here with code samples](https://gist.github.com/tarlen5/008809c3decf19313de216b9208f3734).
+> *来自这篇关于 IoU 的优秀博文中的图 2*
 
-## Different Object Detection Approaches
+这个想法很简单 - 我们将两个图形的交集区域除以它们的并集区域。对于两个相同的区域，IoU 将为 1，而对于完全不相交的区域，它将为 0。否则它将在 0 到 1 之间变化。我们通常只考虑 IoU 超过某个值的那些边界框。
 
-There are two broad classes of object detection algorithms:
+###  平均准确率
 
-* **Region Proposal Networks** (R-CNN, Fast R-CNN, Faster R-CNN). The main idea is to generate **Regions of Interests** (ROI) and run CNN over them, looking for maximum activation. It is a bit similar to the naive approach, with the exception that ROIs are generated in a more clever way. One of the majors drawbacks of such methods is that they are slow, because we need many passes of the CNN classifier over the image.
-* **One-pass** (YOLO, SSD, RetinaNet) methods. In those architectures we design the network to predict both classes and ROIs in one pass.
 
-### R-CNN: Region-Based CNN
 
-[R-CNN](http://islab.ulsan.ac.kr/files/announcement/513/rcnn_pami.pdf) uses [Selective Search](http://www.huppelen.nl/publications/selectiveSearchDraft.pdf) to generate hierarchical structure of ROI regions, which are then passed through CNN feature extractors and SVM-classifiers to determine the object class, and linear regression to determine *bounding box* coordinates. [Official Paper](https://arxiv.org/pdf/1506.01497v1.pdf)
+假设我们要衡量给定类别的对象 � 的识别程度。为了衡量它，我们使用平均精度指标，其计算方式如下：
 
-![RCNN](images/rcnn1.png)
+1. 考虑精确度-召回率曲线显示了根据检测阈值（从 0 到 1）的准确度。
+2. 根据阈值，我们将在图像中检测到或多或少的对象，以及不同的精确度和召回率值。
+3. 曲线将如下所示：
 
-> *Image from van de Sande et al. ICCV’11*
+[![img](https://github.com/shwars/NeuroWorkshop/raw/master/images/ObjDetectionPrecisionRecall.png)](https://github.com/shwars/NeuroWorkshop/raw/master/images/ObjDetectionPrecisionRecall.png)
 
-![RCNN-1](images/rcnn2.png)
+>  *来自 NeuroWorkshop 的图像*
 
-> *Images from [this blog](https://towardsdatascience.com/r-cnn-fast-r-cnn-faster-r-cnn-yolo-object-detection-algorithms-36d53571365e)
+给定类别 � 的平均精度是该曲线下的面积。更准确地说，召回轴通常分为 10 部分，并且精度在所有这些点上取平均值：
 
-### F-RCNN - Fast R-CNN
+��=111∑�=010Precision(Recall=�10)
 
-This approach is similar to R-CNN, but regions are defined after convolution layers have been applied.
+###  AP 和 IoU
 
-![FRCNN](images/f-rcnn.png)
 
-> Image from [the Official Paper](https://www.cv-foundation.org/openaccess/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf), [arXiv](https://arxiv.org/pdf/1504.08083.pdf), 2015
+
+我们只考虑那些 IoU 高于某个值的检测。例如，在 PASCAL VOC 数据集中通常假设 IoU Threshold=0.5 ，而在 COCO 中，AP 是针对 IoU Threshold 的不同值进行测量的。
+
+[![img](https://github.com/shwars/NeuroWorkshop/raw/master/images/ObjDetectionPrecisionRecallIoU.png)](https://github.com/shwars/NeuroWorkshop/raw/master/images/ObjDetectionPrecisionRecallIoU.png)
+
+>  *来自 NeuroWorkshop 的图像*
+
+### 平均准确率 - mAP
+
+
+
+目标检测的主要指标称为平均平均精度或 mAP。它是平均精度值，平均分布在所有对象类别中，有时也分布在 IoU Threshold 中。更详细地说，计算 mAP 的过程在此博客文章中进行了描述，并且还提供了代码示例。
+
+## 不同的目标检测方法
+
+
+
+目标检测算法有两大类：
+
+- 区域提议网络 (R-CNN、Fast R-CNN、Faster R-CNN)。其主要思想是生成感兴趣区域 (ROI)，并在其上运行 CNN，寻找最大激活。这与朴素方法有点类似，但不同之处在于 ROI 的生成方式更巧妙。这种方法的主要缺点之一是速度慢，因为我们需要对图像进行多次 CNN 分类器传递。
+- 单次传递 (YOLO、SSD、RetinaNet) 方法。在这些架构中，我们设计网络以一次预测类别和 ROI。
+
+###  R-CNN：基于区域的 CNN
+
+
+
+R-CNN 使用选择性搜索来生成 ROI 区域的层次结构，然后通过 CNN 特征提取器和 SVM 分类器来确定对象类别，并通过线性回归来确定边界框坐标。官方论文
+
+[![RCNN](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/rcnn1.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/rcnn1.png)
+
+> *来自 van de Sande 等人的图像 ICCV’11*
+
+[![RCNN-1](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/rcnn2.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/rcnn2.png)
+
+>  *此博客的图片
+
+###  F-RCNN - 快速 R-CNN
+
+
+
+这种方法类似于 R-CNN，但区域是在应用卷积层之后定义的。
+
+[![FRCNN](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/f-rcnn.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/f-rcnn.png)
+
+> 来自官方论文，arXiv，2015
 
 ### Faster R-CNN
 
-The main idea of this approach is to use neural network to predict ROIs - so-called *Region Proposal Network*. [Paper](https://arxiv.org/pdf/1506.01497.pdf), 2016
 
-![FasterRCNN](images/faster-rcnn.png)
 
-> Image from [the official paper](https://arxiv.org/pdf/1506.01497.pdf)
+这种方法的主要思想是使用神经网络来预测 ROI，即所谓的区域提议网络。论文，2016
 
-### R-FCN: Region-Based Fully Convolutional Network
+[![FasterRCNN](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/faster-rcnn.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/faster-rcnn.png)
 
-This algorithm is even faster than Faster R-CNN. The main idea is the following:
+> 来自官方论文的图片
 
-1. We extract features using ResNet-101
-1. Features are processed by **Position-Sensitive Score Map**. Each object from $C$ classes is divided by $k\times k$ regions, and we are training to predict parts of objects.
-1. For each part from $k\times k$ regions all networks vote for object classes, and the object class with maximum vote is selected.
+### R-FCN：基于区域的全卷积网络
 
-![r-fcn image](images/r-fcn.png)
 
-> Image from [official paper](https://arxiv.org/abs/1605.06409)
 
-### YOLO - You Only Look Once
+该算法甚至比 Faster R-CNN 还要快。主要思想如下：
 
-YOLO is a realtime one-pass algorithm. The main idea is the following:
+1. 我们使用 ResNet-101 提取特征
+2. 特征由位置敏感评分图处理。来自 � 类的每个对象由 �×� 个区域划分，我们正在训练以预测对象的各个部分。
+3. 对于来自 �×� 区域的每个部分，所有网络都对目标类别进行投票，并选择获得最多票的目标类别。
 
- * Image is divided into $S\times S$ regions
- * For each region, **CNN** predicts $n$ possible objects, *bounding box* coordinates and *confidence*=*probability* * IoU.
+[![r-fcn image](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/r-fcn.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/r-fcn.png)
 
- ![YOLO](images/yolo.png)
+> 来自官方论文的图片
 
-> Image from [official paper](https://arxiv.org/abs/1506.02640)
+### YOLO - 只看一次
 
-### Other Algorithms
 
-* RetinaNet: [official paper](https://arxiv.org/abs/1708.02002)
-   - [PyTorch Implementation in Torchvision](https://pytorch.org/vision/stable/_modules/torchvision/models/detection/retinanet.html)
-   - [Keras Implementation](https://github.com/fizyr/keras-retinanet)
-   - [Object Detection with RetinaNet](https://keras.io/examples/vision/retinanet/) in Keras Samples
-* SSD (Single Shot Detector): [official paper](https://arxiv.org/abs/1512.02325)
 
-## ✍️ Exercises: Object Detection
+YOLO 是一种实时单次算法。其主要思想如下：
 
-Continue your learning in the following notebook:
+- 图像被划分为 �×� 个区域
+- 对于每个区域，CNN预测 � 个可能的物体、边界框坐标和置信度=概率*IoU。
 
-[ObjectDetection.ipynb](ObjectDetection.ipynb)
+[![YOLO](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/yolo.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/images/yolo.png)
 
-## Conclusion
+> 来自官方论文的图片
 
-In this lesson you took a whirlwind tour of all the various ways that object detection can be accomplished!
+###  其他算法
 
-## 🚀 Challenge
 
-Read through these articles and notebooks about YOLO and try them for yourself
 
-* [Good blog post](https://www.analyticsvidhya.com/blog/2018/12/practical-guide-object-detection-yolo-framewor-python/) describing YOLO
- * [Official site](https://pjreddie.com/darknet/yolo/)
- * Yolo: [Keras implementation](https://github.com/experiencor/keras-yolo2), [step-by-step notebook](https://github.com/experiencor/basic-yolo-keras/blob/master/Yolo%20Step-by-Step.ipynb)
- * Yolo v2: [Keras implementation](https://github.com/experiencor/keras-yolo2), [step-by-step notebook](https://github.com/experiencor/keras-yolo2/blob/master/Yolo%20Step-by-Step.ipynb)
+- RetinaNet：官方论文
+  - [PyTorch 在 Torchvision 中的实现](https://pytorch.org/vision/stable/_modules/torchvision/models/detection/retinanet.html)
+  - [ Keras 实现](https://github.com/fizyr/keras-retinanet)
+  - Keras 样本中的 RetinaNet 目标检测
+- SSD（单次检测器）：官方论文
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/211)
+## ✍️ 练习：目标检测
 
-## Review & Self Study
 
-* [Object Detection](https://tjmachinelearning.com/lectures/1718/obj/) by Nikhil Sardana
-* [A good comparison of object detection algorithms](https://lilianweng.github.io/lil-log/2018/12/27/object-detection-part-4.html)
-* [Review of Deep Learning Algorithms for Object Detection](https://medium.com/comet-app/review-of-deep-learning-algorithms-for-object-detection-c1f3d437b852)
-* [A Step-by-Step Introduction to the Basic Object Detection Algorithms](https://www.analyticsvidhya.com/blog/2018/10/a-step-by-step-introduction-to-the-basic-object-detection-algorithms-part-1/)
-* [Implementation of Faster R-CNN in Python for Object Detection](https://www.analyticsvidhya.com/blog/2018/11/implementation-faster-r-cnn-python-object-detection/)
 
-## [Assignment: Object Detection](lab/README.md)
+在以下笔记本中继续学习：
+
+[ObjectDetection.ipynb](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/ObjectDetection.ipynb)
+
+##  结论
+
+
+
+在本课程中，您对对象检测的所有不同方法进行了旋风般的游览！
+
+##  🚀 挑战
+
+
+
+阅读有关 YOLO 的这些文章和笔记本，并亲自尝试一下
+
+- 一篇描述 YOLO 的好博客文章
+- [ 官方网站](https://pjreddie.com/darknet/yolo/)
+- Yolo：Keras 实现，逐步笔记本
+- Yolo v2：Keras 实现，逐步笔记本
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/211)
+
+
+
+##  复习与自学
+
+
+
+- Nikhil Sardana 的目标检测
+- [目标检测算法的良好比较](https://lilianweng.github.io/lil-log/2018/12/27/object-detection-part-4.html)
+- [深度学习目标检测算法综述](https://medium.com/comet-app/review-of-deep-learning-algorithms-for-object-detection-c1f3d437b852)
+- [基本目标检测算法的分步介绍](https://www.analyticsvidhya.com/blog/2018/10/a-step-by-step-introduction-to-the-basic-object-detection-algorithms-part-1/)
+- [Faster R-CNN在Python中的目标检测实现](https://www.analyticsvidhya.com/blog/2018/11/implementation-faster-r-cnn-python-object-detection/)
+
+## [作业：目标检测](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/11-ObjectDetection/lab/README.md)

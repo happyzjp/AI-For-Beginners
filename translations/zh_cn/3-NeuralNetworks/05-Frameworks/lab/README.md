@@ -1,16 +1,22 @@
-# Classification with PyTorch/TensorFlow
+# 使用 PyTorch/TensorFlow 进行分类
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-Solve two classification problems using single and multi-layered fully-connected networks using PyTorch or TensorFlow:
+人工智能初学者课程的实验作业。
 
-1. **[Iris classification](https://en.wikipedia.org/wiki/Iris_flower_data_set)** problem - an example of problem with tabular input data, which can be handled by classical machine learning. You goal would be to classify irises into 3 classes, based on 4 numeric parameters.
-1. **MNIST** handwritten digit classification problem which we have seen before.
+##  任务
 
-Try different network architectures to achieve the best accuracy you can get.
 
-## Stating Notebook
 
-Start the lab by opening [LabFrameworks.ipynb](LabFrameworks.ipynb)
+使用 PyTorch 或 TensorFlow，使用单层和多层全连接网络解决两个分类问题：
+
+1. 鸢尾花分类问题 - 一个表格输入数据问题的示例，可以用经典机器学习来处理。你的目标是根据 4 个数字参数将鸢尾花分类为 3 类。
+2. 我们之前见过的 MNIST 手写数字分类问题。
+
+尝试不同的网络架构以获得你能获得的最佳准确度。
+
+##  说明笔记本
+
+
+
+通过打开 LabFrameworks.ipynb 开始实验

@@ -1,3 +1,5 @@
-# Game Jam
+# 游戏果酱
 
-Games are an area that have been heavily influence by developments in AI and ML. In this assignment, write a short paper on a game that you like that has been influenced by the evolution of AI. It should be an old enough game to have been influenced by several types of computer processing systems. A good example is Chess or Go, but also take a look at video games like pong or Pac-Man. Write an essay that discusses the game's past, present, and AI future.
+
+
+游戏是一个受到人工智能和机器学习发展严重影响的领域。在此作业中，写一篇关于你喜欢的受人工智能演变影响的游戏的短文。它应该是一款足够老的游戏，受到多种计算机处理系统的影响。一个很好的例子是国际象棋或围棋，但也可以看看像乒乓球或吃豆人这样的视频游戏。写一篇讨论游戏过去、现在和人工智能未来的文章。

@@ -1,58 +1,70 @@
-# Convolutional Neural Networks
-
-We have seen before that neural networks are quite good at dealing with images, and even one-layer perceptron is able to recognize handwritten digits from MNIST dataset with reasonable accuracy. However, the MNIST dataset is very special, and all digits are centered inside the image, which makes the task simpler.
-
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/107)
-
-In real life, we want to be able to recognize objects on a picture regardless of their exact location in the image. Computer vision is different from generic classification, because when we are trying to find a certain object in the picture, we are scanning the image looking for some specific **patterns** and their combinations. For example, when looking for a cat, we first may look for horizontal lines, which can form whiskers, and then certain a combination of whiskers can tell us that it is actually a picture of a cat. Relative position and presence of certain patterns is important, and not their exact position on the image.
-
-To extract patterns, we will use the notion of **convolutional filters**. As you know, an image is represented by a 2D-matrix, or a 3D-tensor with color depth. Applying a filter means that we take relatively small **filter kernel** matrix, and for each pixel in the original image we compute the weighted average with neighboring points. We can view this like a small window sliding over the whole image, and averaging out all pixels according to the weights in the filter kernel matrix.
-
-![Vertical Edge Filter](images/filter-vert.png) | ![Horizontal Edge Filter](images/filter-horiz.png)
-----|----
-
-> Image by Dmitry Soshnikov
-
-For example, if we apply 3x3 vertical edge and horizontal edge filters to the MNIST digits, we can get highlights (e.g. high values) where there are vertical and horizontal edges in our original image. Thus those two filters can be used to "look for" edges. Similarly, we can design different filters to look for other low-level patterns:
-
-<img src="images/lmfilters.jpg" width="500" align="center"/>
+# 卷积神经网络
 
 
-> Image of [Leung-Malik Filter Bank](https://www.robots.ox.ac.uk/~vgg/research/texclass/filters.html)
 
-However, while we can design the filters to extract some patterns manually, we can also design the network in such a way that it will learn the patterns automatically. It is one of the main ideas behind the CNN.
+我们之前已经看到神经网络在处理图像方面非常出色，甚至单层感知器也能以合理的准确度识别 MNIST 数据集中的手写数字。然而，MNIST 数据集非常特殊，所有数字都集中在图像内部，这使得任务更简单。
 
-## Main ideas behind CNN
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/107)
 
-The way CNNs work is based on the following important ideas:
 
-* Convolutional filters can extract patterns
-* We can design the network in such a way that filters are trained automatically
-* We can use the same approach to find patterns in high-level features, not only in the original image. Thus CNN feature extraction work on a hierarchy of features, starting from low-level pixel combinations, up to higher level combination of picture parts.
 
-![Hierarchical Feature Extraction](images/FeatureExtractionCNN.png)
+在现实生活中，我们希望能够识别图片上的物体，而不管它们在图片中的确切位置。计算机视觉不同于通用分类，因为当我们尝试在图片中找到某个物体时，我们正在扫描图像，寻找一些特定的模式及其组合。例如，在寻找猫时，我们首先可能会寻找可以形成胡须的水平线，然后胡须的特定组合可以告诉我们它实际上是一张猫的图片。某些模式的相对位置和存在很重要，而不是它们在图像上的确切位置。
 
-> Image from [a paper by Hislop-Lynch](https://www.semanticscholar.org/paper/Computer-vision-based-pedestrian-trajectory-Hislop-Lynch/26e6f74853fc9bbb7487b06dc2cf095d36c9021d), based on [their research](https://dl.acm.org/doi/abs/10.1145/1553374.1553453)
+为了提取模式，我们将使用卷积滤波器的概念。如你所知，图像由 2D 矩阵或具有色彩深度的 3D 张量表示。应用滤波器意味着我们采用相对较小的滤波器核矩阵，并针对原始图像中的每个像素计算与相邻点的加权平均值。我们可以将此视为在整个图像上滑动的小窗口，并根据滤波器核矩阵中的权重对所有像素进行平均。
 
-## ✍️ Exercises: Convolutional Neural Networks
+| [![Vertical Edge Filter](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/filter-vert.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/filter-vert.png) | [![Horizontal Edge Filter](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/filter-horiz.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/filter-horiz.png) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+|                                                              |                                                              |
 
-Let's continue exploring how convolutional neural networks work, and how we can achieve trainable filters, by working through the corresponding notebooks:
+> 图片由 Dmitry Soshnikov
 
-* [Convolutional Neural Networks - PyTorch](ConvNetsPyTorch.ipynb)
-* [Convolutional Neural Networks - TensorFlow](ConvNetsTF.ipynb)
+例如，如果我们对 MNIST 数字应用 3x3 垂直边缘和水平边缘滤波器，我们可以在原始图像中存在垂直和水平边缘的地方获得高亮（例如高值）。因此，这两个滤波器可用于“寻找”边缘。类似地，我们可以设计不同的滤波器来寻找其他低级模式：
 
-## Pyramid Architecture
+[![img](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/lmfilters.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/lmfilters.jpg)
 
-Most of the CNNs used for image processing follow a so-called pyramid architecture. The first convolutional layer applied to the original images typically has a relatively low number of filters (8-16), which correspond to different pixel combinations, such as horizontal/vertical lines of strokes. At the next level, we reduce the spatial dimension of the network, and increase the number of filters, which corresponds to more possible combinations of simple features. With each layer, as we move towards the final classifier, spatial dimensions of the image decrease, and the number of filters grow.
+> 梁-马利克滤波器组图像
 
-As an example, let's look at the architecture of VGG-16, a network that achieved 92.7% accuracy in ImageNet's top-5 classification in 2014:
+然而，虽然我们可以手动设计过滤器来提取一些模式，但我们也可以设计网络，使其自动学习模式。这是 CNN 背后的主要思想之一。
 
-![ImageNet Layers](images/vgg-16-arch1.jpg)
+##  CNN背后的主要思想
 
-![ImageNet Pyramid](images/vgg-16-arch.jpg)
 
-> Image from [Researchgate](https://www.researchgate.net/figure/Vgg16-model-structure-To-get-the-VGG-NIN-model-we-replace-the-2-nd-4-th-6-th-7-th_fig2_335194493)
 
-## Best-Known CNN Architectures
+CNN 的工作方式基于以下重要思想：
 
-[Continue your study about the best-known CNN architectures](CNN_Architectures.md)
+- 卷积滤波器可以提取模式
+- 我们可以设计网络，使滤波器自动训练
+- 我们可以使用相同的方法来查找高级特征中的模式，而不仅仅是在原始图像中。因此，CNN 特征提取工作在特征层次结构上，从低级像素组合开始，直到高级图片部分组合。
+
+[![Hierarchical Feature Extraction](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/FeatureExtractionCNN.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/FeatureExtractionCNN.png)
+
+> 来自 Hislop-Lynch 的论文中的图像，基于他们的研究
+
+## ✍️ 练习：卷积神经网络
+
+
+
+让我们继续探索卷积神经网络的工作原理，以及如何通过处理相应的笔记本来实现可训练的过滤器：
+
+- [卷积神经网络 - PyTorch](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/ConvNetsPyTorch.ipynb)
+- [卷积神经网络 - TensorFlow](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/ConvNetsTF.ipynb)
+
+##  金字塔架构
+
+
+
+用于图像处理的大多数 CNN 都遵循所谓的金字塔架构。应用于原始图像的第一层卷积层通常具有相对较少的滤波器（8-16），这些滤波器对应于不同的像素组合，例如水平/垂直笔画线。在下一层，我们减少网络的空间维度，并增加滤波器的数量，这对应于更多可能的简单特征组合。随着每一层，当我们朝向最终分类器移动时，图像的空间维度减小，滤波器的数量增加。
+
+作为一个例子，让我们看看 VGG-16 的架构，这是一个在 2014 年 ImageNet 的前 5 名分类中达到 92.7% 精度的网络：
+
+[![ImageNet Layers](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch1.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch1.jpg)
+
+[![ImageNet Pyramid](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch.jpg)
+
+>  来自 Researchgate 的图片
+
+## 最著名的 CNN 架构
+
+
+
+[继续学习最著名的 CNN 架构](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/CNN_Architectures.md)

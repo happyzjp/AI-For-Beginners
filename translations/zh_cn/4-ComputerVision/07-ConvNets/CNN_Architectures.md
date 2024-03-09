@@ -1,61 +1,81 @@
-# Well-Known CNN Architectures
+# 著名的 CNN 架构
+
+
 
 ### VGG-16
 
-VGG-16 is a network that achieved 92.7% accuracy in ImageNet top-5 classification in 2014. It has the following layer structure:
 
-![ImageNet Layers](images/vgg-16-arch1.jpg)
 
-As you can see, VGG follows a traditional pyramid architecture, which is a sequence of convolution-pooling layers.
+VGG-16 是一个网络，在 2014 年 ImageNet top-5 分类中获得了 92.7% 的准确率。它具有以下层结构：
 
-![ImageNet Pyramid](images/vgg-16-arch.jpg)
+[![ImageNet Layers](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch1.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch1.jpg)
 
-> Image from [Researchgate](https://www.researchgate.net/figure/Vgg16-model-structure-To-get-the-VGG-NIN-model-we-replace-the-2-nd-4-th-6-th-7-th_fig2_335194493)
+如你所见，VGG 遵循传统的金字塔架构，它是一系列卷积池化层。
+
+[![ImageNet Pyramid](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/vgg-16-arch.jpg)
+
+>  来自 Researchgate 的图片
 
 ### ResNet
 
-ResNet is a family of models proposed by Microsoft Research in 2015. The main idea of ResNet is to use **residual blocks**:
 
-<img src="images/resnet-block.png" width="300"/>
 
-> Image from [this paper](https://arxiv.org/pdf/1512.03385.pdf)
+ResNet 是微软研究院在 2015 年提出的模型系列。ResNet 的主要思想是使用残差块：
 
-The reason for using identity pass-through is to have our layer predict **the difference** between the result of a previous layer and the output of the residual block - hence the name *residual*. Those blocks are much easier to train, and one can construct networks with several hundreds of those blocks (most common variants are ResNet-52, ResNet-101 and ResNet-152).
+[![img](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/resnet-block.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/resnet-block.png)
 
-You can also think of this network as being able to adjust its complexity to the dataset. Initially, when you are starting to train the network, the weights values are small, and most of the signal goes through passthrough identity layers. As training progresses and weights become larger, the significance of network parameters grow, and the networks adjusts to accommodate required expressive power to correctly classify training images.
+>  本文中的图片
 
-### Google Inception
+使用恒等传递的原因是让我们的层预测前一层的结果与残差块的输出之间的差异 - 因此得名残差。这些块更容易训练，并且可以构建具有数百个此类块的网络（最常见的变体是 ResNet-52、ResNet-101 和 ResNet-152）。
 
-Google Inception architecture takes this idea one step further, and builds each network layer as a combination of several different paths:
+您还可以将此网络视为能够根据数据集调整其复杂性。最初，当您开始训练网络时，权重值很小，并且大部分信号都通过传递恒等层。随着训练的进行和权重变大，网络参数的重要性会增加，并且网络会调整以适应正确分类训练图像所需的表达能力。
 
-<img src="images/inception.png" width="400"/>
+### Google Inception 重试 错误原因
 
-> Image from [Researchgate](https://www.researchgate.net/figure/Inception-module-with-dimension-reductions-left-and-schema-for-Inception-ResNet-v1_fig2_355547454)
 
-Here, we need to emphasize the role of 1x1 convolutions, because at first they do not make sense. Why would we need to run through the image with 1x1 filter? However, you need to remember that convolution filters also work with several depth channels (originally - RGB colors, in subsequent layers - channels for different filters), and 1x1 convolution is used to mix those input channels together using different trainable weights. It can be also viewed as downsampling (pooling) over channel dimension.
 
-Here is [a good blog post](https://medium.com/analytics-vidhya/talented-mr-1x1-comprehensive-look-at-1x1-convolution-in-deep-learning-f6b355825578) on the subject, and [the original paper](https://arxiv.org/pdf/1312.4400.pdf).
+谷歌 Inception 架构将这一理念更进一步，并将每一层网络构建为多条不同路径的组合：
+
+[![img](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/inception.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/images/inception.png)
+
+>  来自 Researchgate 的图片
+
+在这里，我们需要强调 1x1 卷积的作用，因为它们一开始没有意义。我们为什么要用 1x1 滤波器遍历图像？但是，您需要记住，卷积滤波器也适用于多个深度通道（最初为 RGB 颜色，在后续层中为不同滤波器的通道），并且 1x1 卷积用于使用不同的可训练权重将这些输入通道混合在一起。它也可以被视为通道维度上的下采样（池化）。
+
+这里有一篇关于该主题的优秀博文和原始论文。
 
 ### MobileNet
 
-MobileNet is a family of models with reduced size, suitable for mobile devices. Use them if you are short in resources, and can sacrifice a little bit of accuracy. The main idea behind them is so-called **depthwise separable convolution**, which allows representing convolution filters by a composition of spatial convolutions and 1x1 convolution over depth channels. This significantly reduces the number of parameters, making the network smaller in size, and also easier to train with less data.
 
-Here is [a good blog post on MobileNet](https://medium.com/analytics-vidhya/image-classification-with-mobilenet-cc6fbb2cd470).
 
-## Conclusion
+MobileNet 是一个尺寸较小的模型系列，适用于移动设备。如果您资源不足，并且可以牺牲一点准确性，请使用它们。它们背后的主要思想是所谓的深度可分离卷积，它允许通过空间卷积和深度通道上的 1x1 卷积的组合来表示卷积滤波器。这显著减少了参数的数量，使网络的尺寸更小，并且更容易使用更少的数据进行训练。
 
-In this unit, you have learned the main concept behind computer vision neural networks - convolutional networks. Real-life architectures that power image classification, object detection, and even image generation networks are all based on CNNs, just with more layers and some additional training tricks.
+这里有一篇关于 MobileNet 的优秀博文。
 
-## 🚀 Challenge
+##  结论
 
-In the accompanying notebooks, there are notes at the bottom about how to obtain greater accuracy. Do some experiments to see if you can achieve higher accuracy.
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/207)
 
-## Review & Self Study
+在本单元中，您学习了计算机视觉神经网络背后的主要概念 - 卷积网络。用于图像分类、对象检测甚至图像生成网络的现实架构都基于 CNN，只是具有更多层和一些额外的训练技巧。
 
-While CNNs are most often used for Computer Vision tasks, they are generally good for extracting fixed-sized patterns. For example, if we are dealing with sounds, we may also want to use CNNs to look for some specific patterns in audio signal - in which case filters would be 1-dimensional (and this CNN would be called 1D-CNN). Also, sometimes 3D-CNN is used to extract features in multi-dimensional space, such as certain events occurring on video - CNN can capture certain patterns of feature changing over time. Do some review and self-study about other tasks that can be done with CNNs.
+##  🚀 挑战
 
-## [Assignment](lab/README.md)
 
-In this lab, you are tasked with classifying different cat and dog breeds. These images are more complex than the MNIST dataset and of higher dimensions, and there are more than 10 classes.
+
+在附带的笔记本中，底部有关于如何获得更高精度的注释。做一些实验，看看您是否可以获得更高的准确性。
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/207)
+
+
+
+##  复习与自学
+
+
+
+虽然 CNN 最常用于计算机视觉任务，但它们通常适用于提取固定大小的模式。例如，如果我们处理声音，我们可能还想使用 CNN 来查找音频信号中的一些特定模式 - 在这种情况下，滤波器将是一维的（并且此 CNN 将被称为 1D-CNN）。此外，有时 3D-CNN 用于提取多维空间中的特征，例如视频中发生的某些事件 - CNN 可以捕获随着时间推移而改变的某些特征模式。对可以使用 CNN 完成的其他任务进行一些复习和自学。
+
+## [ 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/lab/README.md)
+
+
+
+在本实验中，您的任务是对不同的猫和狗品种进行分类。这些图像比 MNIST 数据集更复杂，维度更高，并且有 10 多个类别。

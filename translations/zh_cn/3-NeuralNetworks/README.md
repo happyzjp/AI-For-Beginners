@@ -1,48 +1,57 @@
-# Introduction to Neural Networks
+# 神经网络简介
 
-![Summary of Intro Neural Networks content in a doodle](../sketchnotes/ai-neuralnetworks.png)
 
-As we discussed in the introduction, one of the ways to achieve intelligence is to train a **computer model** or an **artificial brain**. Since the middle of 20th century, researchers tried different mathematical models, until in recent years this direction proved to by hugely successful. Such mathematical models of the brain are called **neural networks**.
 
-> Sometimes neural networks are called *Artificial Neural Networks*, ANNs, in order to indicate that we are talking about models, not real networks of neurons.
+[![Summary of Intro Neural Networks content in a doodle](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/sketchnotes/ai-neuralnetworks.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/sketchnotes/ai-neuralnetworks.png)
 
-## Machine Learning
+正如我们在引言中所讨论的，实现智能的一种方法是训练计算机模型或人造大脑。自 20 世纪中叶以来，研究人员尝试了不同的数学模型，直到近年来，这一方向被证明非常成功。这种大脑数学模型被称为神经网络。
 
-Neural Networks are a part of a larger discipline called **Machine Learning**, whose goal is to use data to train computer models that are able to solve problems. Machine Learning constitutes a large part of Artificial Intelligence, however, we do not cover classical ML in this curricula.
+> 有时神经网络被称为人工神经网络 (ANN)，以表明我们讨论的是模型，而不是神经元的真实网络。
 
-> Visit our separate **[Machine Learning for Beginners](http://github.com/microsoft/ml-for-beginners)** curriculum to learn more about classic Machine Learning.
+##  机器学习
 
-In Machine Learning, we assume that we have some dataset of examples **X**, and corresponding output values **Y**. Examples are often N-dimensional vectors that consist of **features**, and outputs are called **labels**.
 
-We will consider the two most common machine learning problems:
 
-* **Classification**, where we need to classify an input object into two or more classes.
-* **Regression**, where we need to predict a numerical number for each of the input samples.
+神经网络是机器学习这一更大领域的一部分，机器学习的目标是使用数据训练计算机模型，使其能够解决问题。机器学习构成了人工智能的很大一部分，然而，我们在这个课程中不涵盖经典机器学习。
 
-> When representing inputs and outputs as tensors, the input dataset is a matrix of size M&times;N, where M is number of samples and N is the number of features. Output labels Y is the vector of size M.
+> 访问我们单独的机器学习初学者课程，以了解有关经典机器学习的更多信息。
 
-In this curriculum, we will only focus on neural network models.
+在机器学习中，我们假设我们有一些示例数据集 X，以及相应的输出值 Y。示例通常是包含特征的 N 维向量，而输出称为标签。
 
-## A Model of a Neuron
+我们将考虑两个最常见的机器学习问题：
 
-From biology we know that our brain consists of neural cells, each of them having multiple "inputs" (axons), and an output (dendrite). Axons and dendrites can conduct electrical signals, and connections between axons and dendrites can exhibit different degrees of conductivity (controlled by neuromediators).
+- 分类，我们需要将输入对象分类为两个或更多个类别。
+- 回归，我们需要为每个输入样本预测一个数字。
 
-![Model of a Neuron](images/synapse-wikipedia.jpg) | ![Model of a Neuron](images/artneuron.png)
-----|----
-Real Neuron *([Image](https://en.wikipedia.org/wiki/Synapse#/media/File:SynapseSchematic_lines.svg) from Wikipedia)* | Artificial Neuron *(Image by Author)*
+> 在将输入和输出表示为张量时，输入数据集是一个大小为 M×N 的矩阵，其中 M 是样本数，N 是特征数。输出标签 Y 是大小为 M 的向量。
 
-Thus, the simplest mathematical model of a neuron contains several inputs X<sub>1</sub>, ..., X<sub>N</sub> and an output Y, and a series of weights W<sub>1</sub>, ..., W<sub>N</sub>. An output is calculated as:
+在这个课程中，我们只关注神经网络模型。
 
-<img src="images/netout.png" alt="Y = f\left(\sum_{i=1}^N X_iW_i\right)" width="131" height="53" align="center"/>
+## 神经元的模型
 
-where f is some non-linear **activation function**.
 
-> Early models of neuron were described in the classical paper [A logical calculus of the ideas immanent in nervous activity](http://www.springerlink.com/content/61446605110620kg/fulltext.pdf) by Warren McCullock and Walter Pitts in 1943. Donald Hebb in his book "[The Organization of Behavior: A Neuropsychological Theory](https://books.google.com/books?id=VNetYrB8EBoC)" proposed the way those networks can be trained.
 
-## In this Section
+从生物学中我们知道，我们的大脑由神经细胞组成，每个神经细胞都有多个“输入”（轴突）和一个输出（树突）。轴突和树突可以传导电信号，轴突和树突之间的连接可以表现出不同程度的电导率（受神经递质控制）。
 
-In this section we will learn about:
-* [Perceptron](03-Perceptron/README.md), one of the earliest neural network models for two-class classification
-* [Multi-layered networks](04-OwnFramework/README.md) with a paired notebook [how to build our own framework](04-OwnFramework/OwnFramework.ipynb)
-* [Neural Network Frameworks](05-Frameworks/README.md), with these notebooks: [PyTorch](05-Frameworks/IntroPyTorch.ipynb) and [Keras/Tensorflow](05-Frameworks/IntroKerasTF.ipynb)
-* [Overfitting](05-Frameworks/Overfitting.md)
+| [![Model of a Neuron](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/synapse-wikipedia.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/synapse-wikipedia.jpg) | [![Model of a Neuron](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/artneuron.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/artneuron.png) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 真实神经元（来自维基百科的图片）                             | 人工神经元（作者图片）                                       |
+
+因此，神经元的简单数学模型包含几个输入 X 1 , ..., X N 和一个输出 Y，以及一系列权重 W 1 , ..., W N 。输出计算如下：
+
+[![Y = f\left(\sum_{i=1}^N X_iW_i\right)](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/netout.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/netout.png)
+
+其中 f 是某个非线性激活函数。
+
+> 神经元的早期模型在沃伦·麦卡洛克和沃尔特·皮茨 1943 年的经典论文《神经活动中固有思想的逻辑演算》中进行了描述。唐纳德·赫布在他的著作《行为的组织：神经心理学理论》中提出了训练这些网络的方法。
+
+##  在本节中
+
+
+
+在本节中，我们将学习： <Keep This Symbol> 感知器，最早的神经网络模型之一，用于两类分类 <Keep This Symbol> 多层网络，以及如何构建我们自己的框架的配对笔记本
+
+- [Perceptron](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/03-Perceptron/README.md), one of the earliest neural network models for two-class classification
+- [Multi-layered networks](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/README.md) with a paired notebook [how to build our own framework](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/04-OwnFramework/OwnFramework.ipynb)
+- 神经网络框架，使用这些笔记本：PyTorch 和 Keras/Tensorflow
+- [ 过拟合](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/Overfitting.md)

@@ -1,31 +1,39 @@
-# Classification of Pets Faces
+人工智能初学者课程的实验作业。
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
+##  任务
 
-## Task
 
-Imagine you need to develop and application for pet nursery to catalog all pets. One of the great features of such an application would be automatically discovering the breed from a photograph. This can be successfully done using neural networks.
 
-You need to train a convolutional neural network to classify different breeds of cats and dogs using **Pet Faces** dataset.
+想象一下，你需要为宠物育婴室开发一个应用程序来编目所有宠物。此类应用程序的一大特点是能够从照片中自动识别品种。这可以通过神经网络成功完成。
 
-## The Dataset
+你需要训练一个卷积神经网络来使用宠物面部数据集对不同品种的猫和狗进行分类。
 
-We will use the **Pet Faces** dataset, derived from [Oxford-IIIT](https://www.robots.ox.ac.uk/~vgg/data/pets/) pets dataset. It contains 35 different breeds of dogs and cats.
+##  数据集
 
-![Dataset we will deal with](images/data.png)
 
-To download the dataset, use this code snippet:
 
-```python
+我们将使用源自牛津-IIIT 宠物数据集的宠物面孔数据集。它包含 35 种不同的狗和猫品种。
+
+[![Dataset we will deal with](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/07-ConvNets/lab/images/data.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/07-ConvNets/lab/images/data.png)
+
+要下载数据集，请使用此代码片段：
+
+```
 !wget https://mslearntensorflowlp.blob.core.windows.net/data/petfaces.tar.gz
 !tar xfz petfaces.tar.gz
 !rm petfaces.tar.gz
 ```
 
-## Stating Notebook
 
-Start the lab by opening [PetFaces.ipynb](PetFaces.ipynb)
 
-## Takeaway
+##  说明笔记本
 
-You have solved a relatively complex problem of image classification from scratch! There were quite a lot of classes, and you were still able to get reasonable accuracy! It also makes sense to measure top-k accuracy, because it is easy to confuse some of the classes which are not clearly different even to human beings.
+
+
+通过打开 PetFaces.ipynb 启动实验
+
+##  外卖
+
+
+
+您从头解决了图像分类的一个相对复杂的问题！有相当多的类别，您仍然能够获得合理的准确度！测量 top-k 准确度也很有意义，因为即使对于人类来说，也很容易混淆一些差异不明显的类别。

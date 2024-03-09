@@ -1,121 +1,120 @@
-# Neural Network Frameworks
+### 神经网络框架
 
-As we have learned already, to be able to train neural networks efficiently we need to do two things:
+就像我们之前学过的一样，为了有效地训练神经网络，我们需要做到两件事：
 
-* To operate on tensors, eg. to multiply, add, and compute some functions such as sigmoid or softmax
-* To compute gradients of all expressions, in order to perform gradient descent optimization
+- **操作张量**: 例如进行乘法、加法以及计算一些函数，例如 sigmoid 函数或 softmax 函数。
+- **计算所有表达式的梯度**: 为了执行梯度下降优化算法。
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/105)
+##### [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/105)
 
-While the `numpy` library can do the first part, we need some mechanism to compute gradients. In [our framework](../04-OwnFramework/OwnFramework.ipynb) that we have developed in the previous section we had to manually program all derivative functions inside the `backward` method, which does backpropagation. Ideally, a framework should give us the opportunity to compute gradients of *any expression* that we can define.
+虽然 `numpy` 库可以完成第一部分，但我们需要一些机制来计算梯度。在我们上一节中开发的[框架](https://chat.openai.com/04-OwnFramework/OwnFramework.ipynb)中，我们必须在 `backward` 方法中手动编写所有导数函数，该方法执行反向传播。理想情况下，一个框架应该让我们有机会计算我们能定义的任何表达式的梯度。
 
-Another important thing is to be able to perform computations on GPU, or any other specialized compute units, such as [TPU](https://en.wikipedia.org/wiki/Tensor_Processing_Unit). Deep neural network training requires *a lot* of computations, and to be able to parallelize those computations on GPUs is very important.
+另一件重要的事情是能够在 GPU 或任何其他专用计算单元（如 [TPU](https://en.wikipedia.org/wiki/Tensor_Processing_Unit)）上执行计算。深度神经网络训练需要大量的计算，并且能够在 GPU 上并行化这些计算非常重要。
 
-> ✅ The term 'parallelize' means to distribute the computations over multiple devices.
+> ✅ 术语“并行化”是指将计算分布到多个设备上。
 
-Currently, the two most popular neural frameworks are: [TensorFlow](http://TensorFlow.org) and [PyTorch](https://pytorch.org/). Both provide a low-level API to operate with tensors on both CPU and GPU. On top of the low-level API, there is also higher-level API, called [Keras](https://keras.io/) and [PyTorch Lightning](https://pytorchlightning.ai/) correspondingly.
+目前，最流行的两个神经网络框架是：[TensorFlow](http://tensorflow.org/) 和 [PyTorch](https://pytorch.org/)。两者都提供低级 API，可在 CPU 和 GPU 上使用张量进行操作。在低级 API 之上，还有高级 API，分别称为 [Keras](https://keras.io/) 和 [PyTorch Lightning](https://pytorchlightning.ai/)。
 
-Low-Level API | [TensorFlow](http://TensorFlow.org) | [PyTorch](https://pytorch.org/)
---------------|-------------------------------------|--------------------------------
-High-level API| [Keras](https://keras.io/) | [PyTorch Lightning](https://pytorchlightning.ai/)
+| 低级 API | [TensorFlow](http://tensorflow.org/) | [PyTorch](https://pytorch.org/)                   |
+| -------- | ------------------------------------ | ------------------------------------------------- |
+| 高级 API | [Keras](https://keras.io/)           | [PyTorch Lightning](https://pytorchlightning.ai/) |
 
-**Low-level APIs** in both frameworks allow you to build so-called **computational graphs**. This graph defines how to compute the output (usually the loss function) with given input parameters, and can be pushed for computation on GPU, if it is available. There are functions to differentiate this computational graph and compute gradients, which can then be used for optimizing model parameters.
+**低级API** 在这两个框架中都允许构建所谓的 **计算图**。此图定义了如何使用给定的输入参数计算输出（通常是损失函数），并且可以在有 GPU 的情况下将其推送到 GPU 上进行计算。有一些函数可以区分此计算图并计算梯度，然后可将其用于优化模型参数。
 
-**High-level APIs** pretty much consider neural networks as a **sequence of layers**, and make constructing most of the neural networks much easier. Training the model usually requires preparing the data and then calling a `fit` function to do the job.
+**高级API**  几乎将神经网络视为 **层序列**，并且使得构建大多数神经网络变得更加容易。训练模型通常需要准备数据，然后调用 `fit` 函数来完成这项工作。
 
-The high-level API allows you to construct typical neural networks very quickly without worrying about lots of details. At the same time, low-level API offer much more control over the training process, and thus they are used a lot in research, when you are dealing with new neural network architectures.
+高级 API 允许你在无需担心大量细节的情况下非常快速地构建典型的神经网络。同时，低级 API 提供了对训练过程的更多控制，因此在研究中，当涉及到新的神经网络架构时，它们被广泛使用。
 
-It is also important to understand that you can use both APIs together, eg. you can develop your own network layer architecture using low-level API, and then use it inside the larger network constructed and trained with the high-level API. Or you can define a network using the high-level API as a sequence of layers, and then use your own low-level training loop to perform optimization. Both APIs use the same basic underlying concepts, and they are designed to work well together.
+还需要理解的一点是，你可以同时使用这两种API，例如，你可以使用低级API开发自己的网络层架构，然后在使用高级API构建和训练的较大网络中使用它。或者，你可以使用高级API将网络定义为层序列，然后使用自己的低级训练循环执行优化。这两种API使用相同的基本概念，并且它们被设计成能够很好地协同工作。
 
-## Learning
+#####  学习
 
-In this course, we offer most of the content both for PyTorch and TensorFlow. You can choose your preferred framework and only go through the corresponding notebooks. If you are not sure which framework to choose, read some discussions on the internet regarding **PyTorch vs. TensorFlow**. You can also have a look at both frameworks to get better understanding.
+在本课程中，我们为 PyTorch 和 TensorFlow 提供了大部分内容。你可以选择喜欢的框架，只浏览相应的 notebooks。如果不确定选择哪个框架，请阅读互联网上关于**PyTorch与TensorFlow** 的一些讨论。还可以查看这两个框架以获得更好的理解。
 
-Where possible, we will use High-Level APIs for simplicity. However, we believe it is important to understand how neural networks work from the ground up, thus in the beginning we start by working with low-level API and tensors. However, if you want to get going fast and do not want to spend a lot of time on learning these details, you can skip those and go straight into high-level API notebooks.
+在可能的情况下，我们将使用高级 API 以简化操作。但是，我们认为了解神经网络从底层开始的工作原理非常重要，因此一开始我们从使用低级 API 和张量开始。但是，如果你想快速上手，并且不想花很多时间学习这些细节，你可以跳过这些内容，直接进入 notebooks 的 高级 API 部分。
 
-## ✍️ Exercises: Frameworks
+#####  ✍️ 练习：框架
 
-Continue your learning in the following notebooks:
+在以下 notebooks 中继续学习：
 
-Low-Level API | [TensorFlow+Keras Notebook](IntroKerasTF.ipynb) | [PyTorch](IntroPyTorch.ipynb)
---------------|-------------------------------------|--------------------------------
-High-level API| [Keras](IntroKeras.ipynb) | *PyTorch Lightning*
+| 低级 API | [TensorFlow+Keras 笔记本](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/IntroKerasTF.ipynb) | [PyTorch](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/IntroPyTorch.ipynb) |
+| -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| 高级 API | [Keras](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/IntroKeras.ipynb) | *PyTorch Lightning*                                          |
 
-After mastering the frameworks, let's recap the notion of overfitting.
+掌握框架后，让我们回顾一下过拟合的概念。
 
-# Overfitting
+#####  过拟合
 
-Overfitting is an extremely important concept in machine learning, and it is very important to get it right!
+过拟合是机器学习中一个非常重要的概念，正确理解它非常重要！
 
-Consider the following problem of approximating 5 dots (represented by `x` on the graphs below):
+考虑以下关于逼近 5 个点（在下面的图表中用 `x` 表示）的问题：
 
-![linear](../images/overfit1.jpg) | ![overfit](../images/overfit2.jpg)
--------------------------|--------------------------
-**Linear model, 2 parameters** | **Non-linear model, 7 parameters**
-Training error = 5.3 | Training error = 0
-Validation error = 5.1 | Validation error = 20
+| [![linear](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/overfit1.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/overfit1.jpg) | [![overfit](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/overfit2.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/overfit2.jpg) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **线性模型，2 个参数**                                       | **非线性模型，7 个参数**                                     |
+| 训练误差 = 5.3                                               | 训练误差 = 0                                                 |
+| 验证误差 = 5.1                                               | 验证误差 = 20                                                |
 
-* On the left, we see a good straight line approximation. Because the number of parameters is adequate, the model gets the idea behind point distribution right.
-* On the right, the model is too powerful. Because we only have 5 points and the model has 7 parameters, it can adjust in such a way as to pass through all points, making training the error to be 0. However, this prevents the model from understanding the correct pattern behind data, thus the validation error is very high.
+- 在左侧，我们看到一个良好的直线逼近。由于参数数量充足，模型正确地理解了点分布背后的思想。
+- 在右侧，模型过于强大。由于我们只有 5 个点，而模型有 7 个参数，因此它可以调整为通过所有点，从而使训练误差为 0。然而，这会阻止模型理解数据背后的正确模式，因此验证误差非常高。
 
-It is very important to strike a correct balance between the richness of the model (number of parameters) and the number of training samples.
+在模型的丰富性（参数数量）和训练样本数量之间取得正确的平衡非常重要。
 
-## Why overfitting occurs
+#####  为什么会出现过拟合
 
-  * Not enough training data
-  * Too powerful model
-  * Too much noise in input data
+- 训练数据不足
+-  模型过于强大
+- 输入数据中噪声太多
 
-## How to detect overfitting
+##### 如何检测过拟合
 
-As you can see from the graph above, overfitting can be detected by a very low training error, and a high validation error. Normally during training we will see both training and validation errors starting to decrease, and then at some point validation error might stop decreasing and start rising. This will be a sign of overfitting, and the indicator that we should probably stop training at this point (or at least make a snapshot of the model).
+从上面的图表中可以看到，过拟合可以通过非常低的训练误差和较高的验证误差来检测。通常在训练期间，我们会看到训练和验证误差都开始下降，然后在某个时刻验证误差可能会停止下降并开始上升。这将是过拟合的标志，并且表明我们可能应该在此时停止训练（或至少对模型进行快照）。
 
-![overfitting](../images/Overfitting.png)
+[![overfitting](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/Overfitting.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/Overfitting.png)
 
-## How to prevent overfitting
+##### 如何防止过拟合
 
-If you can see that overfitting occurs, you can do one of the following:
+如果你发现发生了过拟合，可以采取以下措施：
 
- * Increase the amount of training data
- * Decrease the complexity of the model
- * Use some [regularization technique](../../4-ComputerVision/08-TransferLearning/TrainingTricks.md), such as [Dropout](../../4-ComputerVision/08-TransferLearning/TrainingTricks.md#Dropout), which we will consider later.
+- 增加训练数据量
+- 降低模型的复杂度
+- 使用一些正则化技术，例如 Dropout，我们将在后面考虑。
 
-## Overfitting and Bias-Variance Tradeoff
+##### 过拟合和偏差-方差权衡
 
-Overfitting is actually a case of a more generic problem in statistics called [Bias-Variance Tradeoff](https://en.wikipedia.org/wiki/Bias%E2%80%93variance_tradeoff). If we consider the possible sources of error in our model, we can see two types of errors:
+过拟合实际上是统计学中一个更通用问题的一个案例，称为[偏差-方差平衡](https://en.wikipedia.org/wiki/Bias–variance_tradeoff)。如果我们考虑模型中可能的误差来源，我们可以看到两种类型的误差：
 
-* **Bias errors** are caused by our algorithm not being able to capture the relationship between training data correctly. It can result from the fact that our model is not powerful enough (**underfitting**).
-* **Variance errors**, which are caused by the model approximating noise in the input data instead of meaningful relationship (**overfitting**).
+- **偏差错误** 是由我们的算法无法正确捕捉训练数据之间的关系引起的。它可能源于我们的模型不够强大（**欠拟合**））。
+- **方差错误** 是由于模型逼近输入数据中的噪声而不是有意义的关系（**过拟合**）引起的。
 
-During training, bias error decreases (as our model learns to approximate the data), and variance error increases. It is important to stop training - either manually (when we detect overfitting) or automatically (by introducing regularization) - to prevent overfitting.
+在训练期间，偏差误差会减小（因为我们的模型学会了逼近数据），而方差误差会增加。重要的是停止训练 - 手动（当我们检测到过拟合时）或自动（通过引入正则化） - 以防止过拟合。
 
-## Conclusion
+#####  结论
 
-In this lesson, you learned about the differences between the various APIs for the two most popular AI frameworks, TensorFlow and PyTorch. In addition, you learned about a very important topic, overfitting.
+在本课程中，你学到了两种最流行的 AI 框架 TensorFlow 和 PyTorch 的各种 API 之间的差异。此外，你还了解了一个非常重要的主题，即过拟合。
 
-## 🚀 Challenge
+#####  🚀 挑战
 
-In the accompanying notebooks, you will find 'tasks' at the bottom; work through the notebooks and complete the tasks.
+在附带的笔记本中，你将在底部找到“任务”；逐步完成这些 notebooks 中的任务。
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/205)
+##### [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/205)
 
-## Review & Self Study
+#####  复习与自学
 
-Do some research on the following topics:
+对以下主题进行一些研究：
 
 - TensorFlow
-- PyTorch
-- Overfitting
+-  PyTorch 
+- 过拟合
 
-Ask yourself the following questions:
+思考以下问题：
 
-- What is the difference between TensorFlow and PyTorch?
-- What is the difference between overfitting and underfitting?
+- TensorFlow 和 PyTorch 有什么区别？
+- 过拟合和欠拟合有什么区别？
 
-## [Assignment](lab/README.md)
+##### [ 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/lab/README.md)
 
-In this lab, you are asked to solve two classification problems using single- and multi-layered fully-connected networks using PyTorch or TensorFlow.
+在本实验中，要求你使用 PyTorch 或 TensorFlow 使用单层和多层全连接网络解决两个分类问题。
 
-* [Instructions](lab/README.md)
-* [Notebook](lab/LabFrameworks.ipynb)
-
+- [ 说明](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/lab/README.md)
+- [ Notebook](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/lab/LabFrameworks.ipynb)

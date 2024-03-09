@@ -1,97 +1,121 @@
-# Autoencoders
+# 自动编码器
 
-When training CNNs, one of the problems is that we need a lot of labeled data. In the case of image classification, we need to separate images into different classes, which is a manual effort.
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/109)
 
-However, we might want to use raw (unlabeled) data for training CNN feature extractors, which is called **self-supervised learning**. Instead of labels, we will use training images as both network input and output. The main idea of **autoencoder** is that we will have an **encoder network** that converts input image into some **latent space** (normally it is just a vector of some smaller size), then the **decoder network**, whose goal would be to reconstruct the original image.
+在训练 CNN 时，其中一个问题是我们需要大量标记数据。在图像分类的情况下，我们需要将图像分成不同的类别，这是一项手动工作。
 
-> ✅ An [autoencoder](https://wikipedia.org/wiki/Autoencoder) is "a type of artificial neural network used to learn efficient codings of unlabeled data."
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/109)
 
-Since we are training an autoencoder to capture as much of the information from the original image as possible for accurate reconstruction, the network tries to find the best **embedding** of input images to capture the meaning.л.
 
-![AutoEncoder Diagram](images/autoencoder_schema.jpg)
 
-> Image from [Keras blog](https://blog.keras.io/building-autoencoders-in-keras.html)
+然而，我们可能希望使用原始（未标记）数据来训练 CNN 特征提取器，这称为自监督学习。我们不会使用标签，而是将训练图像用作网络输入和输出。自动编码器的主要思想是我们将有一个编码器网络，它将输入图像转换为一些潜在空间（通常它只是一个较小尺寸的向量），然后是解码器网络，其目标是重建原始图像。
 
-## Scenarios for using Autoencoders
+> ✅ 自动编码器是“一种用于学习未标记数据的有效编码的人工神经网络”。
 
-While reconstructing original images does not seem useful in its own right, there are a few scenarios where autoencoders are especially useful:
+由于我们正在训练自动编码器尽可能多地从原始图像中获取信息以进行准确重建，因此网络尝试找到输入图像的最佳嵌入以捕获含义。
 
-* **Lowering the dimension of images for visualization** or **training image embeddings**. Usually autoencoders give better results than PCA, because it takes into account spatial nature of images and hierarchical features.
-* **Denoising**, i.e. removing noise from the image. Because noise carries out a lot of useless information, autoencoder cannot fit it all into relatively small latent space, and thus it captures only important part of the image. When training denoisers, we start with original images, and use images with artificially added noise as input for autoencoder.
-* **Super-resolution**, increasing image resolution. We start with high-resolution images, and use the image with lower resolution as the autoencoder input.
-* **Generative models**. Once we train the autoencoder, the decoder part can be used to create new objects starting from random latent vectors.
+[![AutoEncoder Diagram](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/autoencoder_schema.jpg)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/autoencoder_schema.jpg)
 
-## Variational Autoencoders (VAE)
+>  来自 Keras 博客的图片
 
-Traditional autoencoders reduce the dimension of the input data somehow, figuring out the important features of input images. However, latent vectors ofter do not make much sense. In other words, taking MNIST dataset as an example, figuring out which digits correspond to different latent vectors is not an easy task, because close latent vectors would not necessarily correspond to the same digits.
+## 自动编码器的使用场景
 
-On the other hand, to train *generative* models it is better to have some understanding of the latent space. This idea leads us to **variational auto-encoder** (VAE).
 
-VAE is the autoencoder that learns to predict *statistical distribution* of the latent parameters, so-called **latent distribution**. For example, we may want latent vectors to be distributed normally with some mean z<sub>mean</sub> and standard deviation z<sub>sigma</sub> (both mean and standard deviation are vectors of some dimensionality d). Encoder in VAE learns to predict those parameters, and then decoder takes a random vector from this distribution to reconstruct the object.
 
-To summarize:
+虽然重建原始图像本身看起来没什么用，但在以下几种情况下，自动编码器特别有用：
 
- * From input vector, we predict `z_mean` and `z_log_sigma` (instead of predicting the standard deviation itself, we predict its logarithm)
- * We sample a vector `sample` from the distribution N(z<sub>mean</sub>,exp(z<sub>log\_sigma</sub>))
- * The decoder tries to decode the original image using `sample` as an input vector
+- 降低图像维度以进行可视化或训练图像嵌入。通常，自动编码器比 PCA 给出的结果更好，因为它考虑了图像的空间性质和分层特征。
+- 去噪，即从图像中去除噪声。由于噪声携带了很多无用信息，自动编码器无法将其全部放入相对较小的潜在空间中，因此它只捕获图像的重要部分。在训练去噪器时，我们从原始图像开始，并使用添加了人工噪声的图像作为自动编码器的输入。
+- 超分辨率，提高图像分辨率。我们从高分辨率图像开始，并将低分辨率图像用作自动编码器的输入。
+- 生成模型。一旦我们训练了自动编码器，就可以使用解码器部分从随机潜在向量开始创建新对象。
 
- <img src="images/vae.png" width="50%">
+## 变分自动编码器 (VAE)
 
-> Image from [this blog post](https://ijdykeman.github.io/ml/2016/12/21/cvae.html) by Isaak Dykeman
 
-Variational auto-encoders use a complex loss function that consists of two parts:
 
-* **Reconstruction loss** is the loss function that shows how close a reconstructed image is to the target (it can be Mean Squared Error, or MSE). It is the same loss function as in normal autoencoders.
-* **KL loss**, which ensures that latent variable distributions stays close to normal distribution. It is based on the notion of [Kullback-Leibler divergence](https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained) - a metric to estimate how similar two statistical distributions are.
+传统的自动编码器以某种方式降低输入数据的维度，找出输入图像的重要特征。然而，潜在向量通常没有多大意义。换句话说，以 MNIST 数据集为例，找出哪些数字对应于不同的潜在向量并不是一项容易的任务，因为接近的潜在向量不一定对应于相同的数字。
 
-One important advantage of VAEs is that they allow us to generate new images relatively easily, because we know which distribution from which to sample latent vectors. For example, if we train VAE with 2D latent vector on MNIST, we can then vary components of the latent vector to get different digits:
+另一方面，为了训练生成模型，最好对潜在空间有一定的了解。这个想法引导我们到变分自动编码器 (VAE)。
 
-<img alt="vaemnist" src="images/vaemnist.png" width="50%"/>
+VAE 是学习预测潜在参数的统计分布（即潜在分布）的自动编码器。例如，我们可能希望潜在向量以某种均值 z mean 和标准差 z sigma 正态分布（均值和标准差都是某个维度 d 的向量）。VAE 中的编码器学习预测这些参数，然后解码器从该分布中获取一个随机向量来重建对象。
 
-> Image by [Dmitry Soshnikov](http://soshnikov.com)
+ 总结：
 
-Observe how images blend into each other, as we start getting latent vectors from the different portions of the latent parameter space. We can also visualize this space in 2D:
+- 从输入向量中，我们预测 `z_mean` 和 `z_log_sigma` （我们不预测标准差本身，而是预测其对数）
+- 我们从分布 N(z mean ,exp(z log_sigma )) 中采样一个向量 `sample`
+- 解码器尝试使用 `sample` 作为输入向量来解码原始图像
 
-<img alt="vaemnist cluster" src="images/vaemnist-diag.png" width="50%"/> 
+[![img](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/vae.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/vae.png)
 
-> Image by [Dmitry Soshnikov](http://soshnikov.com)
+> 来自 Isaak Dykeman 的这篇博文中的图片
 
-## ✍️ Exercises: Autoencoders
+变分自动编码器使用一个由两部分组成的复杂损失函数：
 
-Learn more about autoencoders in these corresponding notebooks:
+- 重建损失是损失函数，它显示了重建图像与目标的接近程度（它可以是均方误差或 MSE）。它与普通自动编码器中的损失函数相同。
+- KL 损失，它确保潜在变量分布保持接近于正态分布。它基于 Kullback-Leibler 散度的概念 - 一种度量两个统计分布相似程度的指标。
 
-* [Autoencoders in TensorFlow](AutoencodersTF.ipynb)
-* [Autoencoders in PyTorch](AutoEncodersPyTorch.ipynb)
+变分自动编码器的一个重要优势在于，它们允许我们相对容易地生成新图像，因为我们知道从哪个分布中对潜在向量进行采样。例如，如果我们在 MNIST 上使用 2D 潜在向量训练 VAE，那么我们就可以改变潜在向量的分量来获得不同的数字：
 
-## Properties of Autoencoders
+[![vaemnist](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/vaemnist.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/vaemnist.png)
 
-* **Data Specific** - they only work well with the type of images they have been trained on. For example, if we train a super-resolution network on flowers, it will not work well on portraits. This is because the network can produce higher resolution image by taking fine details from features learned from the training dataset.
-* **Lossy** - the reconstructed image is not the same as the original image. The nature of loss is defined by the *loss function* used during training
-* Works on **unlabeled data**
+> 图片由 Dmitry Soshnikov 拍摄
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/209)
+观察图像如何相互融合，因为我们开始从潜在参数空间的不同部分获取潜在向量。我们还可以在 2D 中可视化此空间：
 
-## Conclusion
+[![vaemnist cluster](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/vaemnist-diag.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/images/vaemnist-diag.png)
 
-In this lesson, you learned about the various types of autoencoders available to the AI scientist. You learned how to build them, and how to use them to reconstruct images. You also learned about the VAE and how to use it to generate new images.
+> 图片由 Dmitry Soshnikov 拍摄
 
-## 🚀 Challenge
+## ✍️ 练习：自动编码器
 
-In this lesson, you learned about using autoencoders for images. But they can also be used for music! Check out the Magenta project's [MusicVAE](https://magenta.tensorflow.org/music-vae) project, which uses autoencoders to learn to reconstruct music. Do some [experiments](https://colab.research.google.com/github/magenta/magenta-demos/blob/master/colab-notebooks/Multitrack_MusicVAE.ipynb) with this library to see what you can create.
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/208)
 
-## Review & Self Study
+在这些相应的笔记本中了解有关自动编码器的更多信息：
 
-For reference, read more about autoencoders in these resources:
+- [TensorFlow 中的自动编码器](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/AutoencodersTF.ipynb)
+- [ PyTorch 中的自动编码器](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/4-ComputerVision/09-Autoencoders/AutoEncodersPyTorch.ipynb)
 
-* [Building Autoencoders in Keras](https://blog.keras.io/building-autoencoders-in-keras.html)
-* [Blog post on NeuroHive](https://neurohive.io/ru/osnovy-data-science/variacionnyj-avtojenkoder-vae/)
-* [Variational Autoencoders Explained](https://kvfrans.com/variational-autoencoders-explained/)
-* [Conditional Variational Autoencoders](https://ijdykeman.github.io/ml/2016/12/21/cvae.html)
+## 自动编码器的属性
 
-## Assignment
 
-At the end of [this notebook using TensorFlow](AutoencodersTF.ipynb), you will find a 'task' - use this as your assignment.
+
+- 数据特定 - 它们仅适用于经过训练的图像类型。例如，如果我们在花朵上训练超分辨率网络，它将无法很好地处理人像。这是因为网络可以通过从训练数据集中学习到的特征中获取精细的细节来生成更高分辨率的图像。
+- 有损 - 重建的图像与原始图像不同。损失的性质由训练期间使用的损失函数定义
+-  适用于未标记的数据
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/209)
+
+
+
+##  结论
+
+
+
+在本课中，您了解了人工智能科学家可用的各种类型的自动编码器。您学习了如何构建它们以及如何使用它们来重建图像。您还了解了 VAE 以及如何使用它来生成新图像。
+
+##  🚀 挑战
+
+
+
+在本课中，您学习了如何将自动编码器用于图像。但它们也可以用于音乐！查看 Magenta 项目的 MusicVAE 项目，该项目使用自动编码器来学习重建音乐。使用此库进行一些实验，看看您可以创建什么。
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/208)
+
+
+
+##  复习与自学
+
+
+
+有关参考，请在以下资源中阅读更多有关自动编码器的信息：
+
+- [在 Keras 中构建自动编码器](https://blog.keras.io/building-autoencoders-in-keras.html)
+- [NeuroHive 博客文章](https://neurohive.io/ru/osnovy-data-science/variacionnyj-avtojenkoder-vae/)
+- [变分自动编码器详解](https://kvfrans.com/variational-autoencoders-explained/)
+- [条件变分自动编码器](https://ijdykeman.github.io/ml/2016/12/21/cvae.html)
+
+##  作业
+
+
+
+在本节使用 TensorFlow 的末尾，您将找到一个“任务” - 将其用作您的作业。

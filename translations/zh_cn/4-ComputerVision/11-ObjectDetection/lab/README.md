@@ -1,16 +1,22 @@
-# Head Detection using Hollywood Heads Dataset
+# 使用好莱坞头部数据集进行头部检测
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-Counting number of people on video surveillance camera stream is an important task that will allow us to estimate the number of visitors in a shops, busy hours in a restaurant, etc. To solve this task, we need to be able to detect human heads from different angles. To train object detection model to detect human heads, we can use [Hollywood Heads Dataset](https://www.di.ens.fr/willow/research/headdetection/).
+人工智能初学者课程的实验作业。
 
-## The Dataset
+##  任务
 
-[Hollywood Heads Dataset](https://www.di.ens.fr/willow/research/headdetection/release/HollywoodHeads.zip) contains 369,846 human heads annotated in 224,740 movie frames from Hollywood movies. It is provided in [https://host.robots.ox.ac.uk/pascal/VOC/](PASCAL VOC) format, where for each image there is also an XML description file that looks like this:
 
-```xml
+
+计算视频监控摄像头流中的人数是一项重要任务，它将使我们能够估计商店中的访客数量、餐厅中的繁忙时间等。为了解决此任务，我们需要能够从不同角度检测人头。为了训练对象检测模型以检测人头，我们可以使用好莱坞人头数据集。
+
+##  数据集
+
+
+
+好莱坞人头数据集包含 369,846 个人头，这些个人头在好莱坞电影的 224,740 个电影帧中进行了注释。它以 [ https://host.robots.ox.ac.uk/pascal/VOC/](PASCAL VOC) 格式提供，其中每个图像还有一个 XML 描述文件，如下所示：
+
+```
 <annotation>
 	<folder>HollywoodHeads</folder>
 	<filename>mov_021_149390.jpeg</filename>
@@ -48,16 +54,22 @@ Counting number of people on video surveillance camera stream is an important ta
 </annotation>
 ```
 
-In this dataset, there is only one class of objects `head`, and for each head, you get the coordinates of the bounding box. You can parse XML using Python libraries, or use [this library](https://pypi.org/project/pascal-voc/) to deal directly with PASCAL VOC format.
 
-## Training Object Detection 
 
-You can train an object detection model using one of the following ways:
+在此数据集中，只有一类对象 `head` ，并且对于每个头，您都可以获得边界框的坐标。您可以使用 Python 库解析 XML，或使用此库直接处理 PASCAL VOC 格式。
 
-* Using [Azure Custom Vision](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/quickstarts/object-detection?tabs=visual-studio&WT.mc_id=academic-77998-cacaste) and it's Python API to programmatically train the model in the cloud. Custom vision will not be able to use more than a few hundred images for training the model, so you may need to limit the dataset.
-* Using the example from [Keras tutorial](https://keras.io/examples/vision/retinanet/) to train RetunaNet model.
-* Using [torchvision.models.detection.RetinaNet](https://pytorch.org/vision/stable/_modules/torchvision/models/detection/retinanet.html) build-in module in torchvision.
+## 训练对象检测
 
-## Takeaway
 
-Object detection is a task that is frequently required in industry. While there are some services that can be used to perform object detection (such as [Azure Custom Vision](https://docs.microsoft.com/azure/cognitive-services/custom-vision-service/quickstarts/object-detection?tabs=visual-studio&WT.mc_id=academic-77998-cacaste)), it is important to understand how object detection works and to be able to train your own models. 
+
+您可以使用以下方法之一训练对象检测模型：
+
+- 使用 Azure Custom Vision 及其 Python API 以编程方式在云中训练模型。Custom Vision 无法使用超过几百张图像来训练模型，因此您可能需要限制数据集。
+- 使用 Keras 教程中的示例来训练 RetunaNet 模型。
+- 使用 torchvision.models.detection.RetinaNet 构建 torchvision 中的模块。
+
+##  外卖
+
+
+
+对象检测是一项在工业中经常需要执行的任务。虽然有一些服务可用于执行对象检测（例如 Azure Custom Vision），但了解对象检测的工作原理并能够训练自己的模型非常重要。

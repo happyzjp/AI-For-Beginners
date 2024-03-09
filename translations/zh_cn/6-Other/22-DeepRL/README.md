@@ -1,35 +1,43 @@
-# Deep Reinforcement Learning
+# 深度强化学习
 
-Reinforcement learning (RL) is seen as one of the basic machine learning paradigms, next to supervised learning and unsupervised learning. While in supervised learning we rely on the dataset with known outcomes, RL is based on **learning by doing**. For example, when we first see a computer game, we start playing, even without knowing the rules, and soon we are able to improve our skills just by the process of playing and adjusting our behavior.
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/122)
 
-To perform RL, we need:
+强化学习 (RL) 被视为基本机器学习范例之一，紧随监督学习和无监督学习之后。虽然在监督学习中我们依赖于具有已知结果的数据集，但 RL 基于通过实践进行学习。例如，当我们第一次看到电脑游戏时，我们开始玩，即使不知道规则，很快我们就能仅仅通过玩和调整我们的行为来提高我们的技能。
 
-* An **environment** or **simulator** that sets the rules of the game. We should be able to run the experiments in the simulator and observe the results.
-* Some **Reward function**, which indicate how successful our experiment was. In case of learning to play a computer game, the reward would be our final score.
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/122)
 
-Based on the reward function, we should be able to adjust our behavior and improve our skills, so that the next time we play better. The main difference between other types of machine learning and RL is that in RL we typically do not know whether we win or lose until we finish the game. Thus, we cannot say whether a certain move alone is good or not - we only receive a reward at the end of the game.
 
-During RL, we typically perform many experiments. During each experiment, we need to balance between following the optimal strategy that we have learned so far (**exploitation**) and exploring new possible states (**exploration**).
+
+要执行 RL，我们需要：
+
+- 一个设置游戏规则的环境或模拟器。我们应该能够在模拟器中运行实验并观察结果。
+- 一些奖励函数，它指示我们的实验有多成功。在学习玩电脑游戏的情况下，奖励将是我们的最终得分。
+
+基于奖励函数，我们应该能够调整我们的行为并提高我们的技能，以便下次我们玩得更好。其他类型的机器学习和 RL 之间的主要区别在于，在 RL 中，我们通常不知道我们在完成游戏之前是否会赢或输。因此，我们不能说某个动作本身是好还是坏——我们只在游戏结束时收到奖励。
+
+在 RL 期间，我们通常会执行许多实验。在每次实验期间，我们需要在遵循我们迄今为止学到的最优策略（利用）和探索新的可能状态（探索）之间取得平衡。
 
 ## OpenAI Gym
 
-A great tool for RL is the [OpenAI Gym](https://gym.openai.com/) - a **simulation environment**, which can simulate many different environments starting from Atari games, to the physics behind pole balancing. It is one of the most popular simulation environments for training reinforcement learning algorithms, and is maintained by [OpenAI](https://openai.com/).
 
-> **Note**: You can see all the environments available from OpenAI Gym [here](https://gym.openai.com/envs/#classic_control).
 
-## CartPole Balancing
+强化学习的一个好工具是 OpenAI Gym - 一个模拟环境，它可以模拟许多不同的环境，从雅达利游戏到平衡杆背后的物理原理。它是训练强化学习算法最流行的模拟环境之一，由 OpenAI 维护。
 
-You have probably all seen modern balancing devices such as the *Segway* or *Gyroscooters*. They are able to automatically balance by adjusting their wheels in response to a signal from an accelerometer or gyroscope. In this section, we will learn how to solve a similar problem - balancing a pole. It is similar to a situation when a circus performer needs to balance a pole on his hand - but this pole balancing only occurs in 1D.
+> 注意：您可以在此处查看 OpenAI Gym 提供的所有环境。
 
-A simplified version of balancing is known as a **CartPole** problem. In the cartpole world, we have a horizontal slider that can move left or right, and the goal is to balance a vertical pole on top of the slider as it moves.
+##  平衡小车
 
-<img alt="a cartpole" src="images/cartpole.png" width="200"/>
 
-To create and use this environment, we need a couple of lines of Python code:
 
-```python
+您可能都见过诸如 Segway 或 Gyroscooters 等现代平衡设备。它们能够通过根据加速度计或陀螺仪的信号调整其车轮来自动平衡。在本节中，我们将学习如何解决一个类似的问题——平衡一根杆子。这类似于马戏团表演者需要用手平衡一根杆子的情况——但这种杆子平衡只发生在 1D 中。
+
+平衡的简化版本称为 CartPole 问题。在 CartPole 世界中，我们有一个可以左右移动的水平滑块，目标是在滑块移动时在其顶部平衡一根垂直杆子。
+
+[![a cartpole](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/6-Other/22-DeepRL/images/cartpole.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/22-DeepRL/images/cartpole.png)
+
+要创建和使用此环境，我们需要几行 Python 代码：
+
+```
 import gym
 env = gym.make("CartPole-v1")
 
@@ -45,70 +53,91 @@ while not done:
 print(f"Total reward: {total_reward}")
 ```
 
-Each environment can be accessed exactly in the same way:
-* `env.reset` starts a new experiment
-* `env.step` performs a simulation step. It receives an **action** from the **action space**, and returns an **observation** (from the observation space), as well as a reward and a termination flag.
 
-In the example above we perform a random action at each step, which is why the experiment life is very short:
 
-![non-balancing cartpole](images/cartpole-nobalance.gif)
+每个环境都可以完全相同的方式访问：
 
-The goal of a RL algorithm is to train a model - the so called **policy** &pi; - which will return the action in response to a given state. We can also consider policy to be probabilistic, eg. for any state *s* and action *a* it will return the probability &pi;(*a*|*s*) that we should take *a* in state *s*.
+- `env.reset` 开始一个新实验
+- `env.step` 执行模拟步骤。它从动作空间接收动作，并返回观察（来自观察空间），以及奖励和终止标志。
 
-## Policy Gradients Algorithm
+在上面的示例中，我们在每一步执行随机动作，这就是实验生命非常短的原因：
 
-The most obvious way to model a policy is by creating a neural network that will take states as input, and return corresponding actions (or rather the probabilities of all actions). In a sense, it would be similar to a normal classification task, with a major difference - we do not know in advance which actions should we take at each of the steps.
+[![non-balancing cartpole](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/6-Other/22-DeepRL/images/cartpole-nobalance.gif)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/22-DeepRL/images/cartpole-nobalance.gif)
 
-The idea here is to estimate those probabilities. We build a vector of **cumulative rewards** which shows our total reward at each step of the experiment. We also apply **reward discounting** by multiplying earlier rewards by some coefficient &gamma;=0.99, in order to diminish the role of earlier rewards. Then, we reinforce those steps along the experiment path that yield larger rewards.
+强化学习算法的目标是训练一个模型 - 所谓的策略 π - 它将根据给定的状态返回动作。我们还可以考虑策略是概率性的，例如对于任何状态 s 和动作 a，它将返回我们应该在状态 s 中采取 a 的概率 π(a|s)。
 
-> Learn more about the Policy Gradient algorithm and see it in action in the [example notebook](CartPole-RL-TF.ipynb).
+## 策略梯度算法
 
-## Actor-Critic Algorithm
 
-An improved version of the Policy Gradients approach is called **Actor-Critic**. The main idea behind it is that the neural network would be trained to return two things:
 
-* The policy, which determines which action to take. This part is called **actor**
-* The estimation of the total reward we can expect to get at this state - this part is called **critic**.
+建模策略最明显的方法是创建一个神经网络，它将状态作为输入，并返回相应的动作（或更确切地说，所有动作的概率）。从某种意义上说，它类似于一个普通的分类任务，但有一个主要区别——我们事先不知道在每个步骤中应该采取哪些动作。
 
-In a sense, this architecture resembles a [GAN](../../4-ComputerVision/10-GANs/README.md), where we have two networks that are trained against each other. In the actor-critic model, the actor proposes the action we need to take, and the critic tries to be critical and estimate the result. However, our goal is to train those networks in unison.
+这里的想法是估计这些概率。我们构建一个累积奖励向量，它显示了我们在实验的每个步骤中的总奖励。我们还通过将较早的奖励乘以某个系数 γ=0.99 来应用奖励折扣，以减少较早奖励的作用。然后，我们沿着产生更大奖励的实验路径强化这些步骤。
 
-Because we know both the real cumulative rewards and the results returned by the critic during the experiment, it is relatively easy to build a loss function that will minimize the difference between them. That would give us **critic loss**. We can compute **actor loss** by using the same approach as in the policy gradient algorithm.
+> 详细了解策略梯度算法，并在示例笔记本中查看其实际应用。
 
-After running one of those algorithms, we can expect our CartPole to behave like this:
+##  Actor-Critic 算法
 
-![a balancing cartpole](images/cartpole-balance.gif)
 
-## ✍️ Exercises: Policy Gradients and Actor-Critic RL
 
-Continue your learning in the following notebooks:
+策略梯度方法的改进版本称为 Actor-Critic。其背后的主要思想是神经网络将被训练以返回两件事：
 
-* [RL in TensorFlow](CartPole-RL-TF.ipynb)
-* [RL in PyTorch](CartPole-RL-PyTorch.ipynb)
+- 策略，它决定采取什么行动。这部分称为 actor
+- 我们期望在此状态下获得的总奖励的估计 - 这部分称为 critic。
 
-## Other RL Tasks
+从某种意义上说，此架构类似于 GAN，其中我们有两个相互训练的网络。在 actor-critic 模型中，actor 提出我们需要采取的行动，而 critic 试图批判并估计结果。但是，我们的目标是同时训练这些网络。
 
-Reinforcement Learning nowadays is a fast growing field of research. Some of the interesting examples of reinforcement learning are:
+因为我们知道实验期间 critic 返回的真实累积奖励和结果，所以构建一个最小化它们之间差异的损失函数相对容易。这将给我们带来 critic 损失。我们可以使用与策略梯度算法中相同的方法来计算 actor 损失。
 
-* Teaching a computer to play **Atari Games**. The challenging part in this problem is that we do not have simple state represented as a vector, but rather a screenshot - and we need to use the CNN to convert this screen image to a feature vector, or to extract reward information. Atari games are available in the Gym.
-* Teaching a computer to play board games, such as Chess and Go. Recently state-of-the-art programs like **Alpha Zero** were trained from scratch by two agents playing against each other, and improving at each step.
-* In industry, RL is used to create control systems from simulation. A service called [Bonsai](https://azure.microsoft.com/services/project-bonsai/?WT.mc_id=academic-77998-cacaste) is specifically designed for that.
+在运行其中一种算法后，我们可以预期我们的 CartPole 会像这样表现：
 
-## Conclusion
+[![a balancing cartpole](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/6-Other/22-DeepRL/images/cartpole-balance.gif)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/22-DeepRL/images/cartpole-balance.gif)
 
-We have now learned how to train agents to achieve good results just by providing them a reward function that defines the desired state of the game, and by giving them an opportunity to intelligently explore the search space. We have successfully tried two algorithms, and achieved a good result in a relatively short period of time. However, this is just the beginning of your journey into RL, and you should definitely consider taking a separate course is you want to dig deeper.
+## ✍️ 练习：策略梯度和 Actor-Critic RL
 
-## 🚀 Challenge
 
-Explore the applications listed in the 'Other RL Tasks' section and try to implement one!
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/222)
+在以下笔记本中继续学习：
 
-## Review & Self Study
+- [ TensorFlow 中的强化学习](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/22-DeepRL/CartPole-RL-TF.ipynb)
+- [ PyTorch 中的强化学习](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/22-DeepRL/CartPole-RL-PyTorch.ipynb)
 
-Learn more about classical reinforcement learning in our [Machine Learning for Beginners Curriculum](https://github.com/microsoft/ML-For-Beginners/blob/main/8-Reinforcement/README.md).
+##  其他强化学习任务
 
-Watch [this great video](https://www.youtube.com/watch?v=qv6UVOQ0F44) talking about how a computer can learn to play Super Mario.
 
-## Assignment: [Train a Mountain Car](lab/README.md)
 
-Your goal during this assignment would be to train a different Gym environment - [Mountain Car](https://www.gymlibrary.ml/environments/classic_control/mountain_car/).
+强化学习如今是一个快速发展的研究领域。强化学习的一些有趣示例包括：
+
+- 教计算机玩雅达利游戏。此问题的难点在于，我们没有以向量形式表示的简单状态，而是一个屏幕截图——我们需要使用 CNN 将此屏幕图像转换为特征向量或提取奖励信息。雅达利游戏可在 Gym 中获得。
+- 教计算机玩棋盘游戏，例如国际象棋和围棋。最近，Alpha Zero 等最先进的程序通过两个代理相互对抗并逐步改进而从头开始接受训练。
+- 在工业中，RL 用于根据模拟创建控制系统。名为 Bonsai 的一项服务专门为此而设计。
+
+##  结论
+
+
+
+我们现在已经学会了如何训练代理，只需为它们提供定义游戏所需状态的奖励函数，并让它们有机会智能地探索搜索空间，即可获得良好的结果。我们已经成功尝试了两种算法，并在相对较短的时间内取得了良好的结果。然而，这仅仅是您进入 RL 旅程的开始，如果您想深入挖掘，您绝对应该考虑参加单独的课程。
+
+##  🚀 挑战
+
+
+
+探索“其他 RL 任务”部分中列出的应用程序，并尝试实现一个！
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/222)
+
+
+
+##  复习与自学
+
+
+
+在我们的机器学习初学者课程中了解有关经典强化学习的更多信息。
+
+观看此精彩视频，了解计算机如何学会玩超级马里奥。
+
+## 作业：训练山地车
+
+
+
+您在此任务期间的目标是训练不同的 Gym 环境 - 山地车。

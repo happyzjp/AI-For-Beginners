@@ -1,16 +1,22 @@
 # NER
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-In this lab, you need to train named entity recognition model for medical terms.
+人工智能初学者课程的实验作业。
 
-## The Dataset
+##  任务
 
-To train NER model, we need properly labeled dataset with medical entities. [BC5CDR dataset](https://biocreative.bioinformatics.udel.edu/tasks/biocreative-v/track-3-cdr/) contains labeled diseases and chemicals entities from more than 1500 papers. You may download the dataset after registering at their web site.
 
-BC5CDR Dataset looks like this:
+
+在这个实验中，你需要训练医学术语的命名实体识别模型。
+
+##  数据集
+
+
+
+要训练 NER 模型，我们需要有正确标记的医学实体数据集。BC5CDR 数据集包含来自 1500 多篇论文的标记疾病和化学实体。您可以在其网站上注册后下载该数据集。
+
+BC5CDR 数据集如下所示：
 
 ```
 6794356|t|Tricuspid valve regurgitation and lithium carbonate toxicity in a newborn infant.
@@ -21,27 +27,35 @@ BC5CDR Dataset looks like this:
 ...
 ```
 
-In this dataset, there are paper title and abstract in the first two lines, and then there are individual entities, with beginning and end positions within title+abstract block. In addition to entity type, you get the ontology ID of this entity within some medical ontology.
 
-You will need to write some Python code to convert this into BIO encoding.
 
-## The Network
+在此数据集中，前两行是论文标题和摘要，然后是各个实体，以及标题 + 摘要块中的开始和结束位置。除了实体类型外，您还可以在某些医学本体中获取此实体的本体 ID。
 
-First attempt at NER can be done by using LSTM network, as in our example you have seen during the lesson. However, in NLP tasks, [transformer architecture](https://en.wikipedia.org/wiki/Transformer_(machine_learning_model)), and specifically [BERT language models](https://en.wikipedia.org/wiki/BERT_(language_model)) show much better results. Pre-trained BERT models understand the general structure of a language, and can be fine-tuned for specific tasks with relatively small datasets and computational costs.
+您需要编写一些 Python 代码将其转换为 BIO 编码。
 
-Since we are planning to apply NER to medical scenario, it makes sense to use BERT model trained on medical texts. Microsoft Research has released a pre-trained a model called [PubMedBERT][PubMedBERT] ([publication][PubMedBERT-Pub]), which was fine-tuned using texts from [PubMed](https://pubmed.ncbi.nlm.nih.gov/) repository.
+##  网络
 
-The *de facto* standard for training transformer models is [Hugging Face Transformers](https://huggingface.co/) library. It also contains a repository of community-maintained pre-trained models, including PubMedBERT. To load and use this model, we just need a couple of lines of code:
 
-```python
+
+第一次尝试 NER 可以使用 LSTM 网络，就像您在课程中看到的示例一样。然而，在 NLP 任务中，transformer 架构，特别是 BERT 语言模型显示出更好的结果。预训练的 BERT 模型了解语言的一般结构，并且可以通过相对较小的数据集和计算成本针对特定任务进行微调。
+
+由于我们计划将 NER 应用于医学场景，因此使用在医学文本上训练的 BERT 模型是有意义的。Microsoft Research 发布了一个名为 [PubMedBERT][PubMedBERT] ([出版物][PubMedBERT-Pub]) 的预训练模型，该模型使用 PubMed 存储库中的文本进行了微调。
+
+训练 Transformer 模型的事实标准是 Hugging Face Transformers 库。它还包含一个由社区维护的预训练模型存储库，包括 PubMedBERT。要加载并使用此模型，我们只需要几行代码：
+
+```
 model_name = "microsoft/BiomedNLP-PubMedBERT-base-uncased-abstract"
 classes = ... # number of classes: 2*entities+1
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = BertForTokenClassification.from_pretrained(model_name, classes)
 ```
 
-This gives us the `model` itself, built for token classification task using `classes` number of classes, as well as `tokenizer` object that can split input text into tokens. You will need to convert the dataset into BIO format, taking PubMedBERT tokenization into account. You can use [this bit of Python code](https://gist.github.com/shwars/580b55684be3328eb39ecf01b9cbbd88) as an inspiration.
 
-## Takeaway
 
-This task is very close to the actual task you are likely go have if you want to gain more insights into large volumes on natural language texts. In our case, we can apply our trained model to the [dataset of COVID-related papers](https://www.kaggle.com/allen-institute-for-ai/CORD-19-research-challenge) and see which insights we will be able to get. [This blog post](https://soshnikov.com/science/analyzing-medical-papers-with-azure-and-text-analytics-for-health/) and [this paper](https://www.mdpi.com/2504-2289/6/1/4) describe the research the can be done on this corpus of papers using NER.
+这给了我们 `model` 本身，它使用 `classes` 类的数量构建用于标记分类任务，以及可以将输入文本拆分为标记的 `tokenizer` 对象。您需要将数据集转换为 BIO 格式，同时考虑 PubMedBERT 标记化。您可以使用这段 Python 代码作为灵感。
+
+##  外卖
+
+
+
+如果您想深入了解大量自然语言文本，这项任务非常接近您可能拥有的实际任务。在我们的案例中，我们可以将训练好的模型应用于与 COVID 相关的论文数据集，看看我们能够获得哪些见解。这篇博文和这篇论文描述了可以使用 NER 在这组论文上进行的研究。

@@ -1,3 +1,3 @@
-# Build an Ontology
+# 构建本体
 
-Building a knowledge base is all about categorizing a model representing facts about a topic. Pick a topic - like a person, a place, or a thing - and then build a model of that topic. Use some of the techniques and model-building strategies described in this lesson. An example would be creating an ontology of a living room with furniture, lights, and so on. How does the living room differ from the kitchen? The bathroom? How do you know it's a living room and not a dining room? Use [Protégé](https://protege.stanford.edu/) to build your ontology.
+构建知识库就是对表示某个主题事实的模型进行分类。选择一个主题——比如一个人、一个地方或一个事物——然后构建该主题的模型。使用本课中描述的一些技术和模型构建策略。一个例子是创建一个带家具、灯具等的起居室本体。起居室与厨房有什么不同？浴室呢？你怎么知道它是起居室而不是餐厅？使用 Protégé 构建您的本体。

@@ -1,38 +1,44 @@
-# Multi-Agent Systems
+# 多智能体系统
 
-One of the possible ways of achieving intelligence is so-called **emergent** (or **synergetic**) approach, which is based on the fact that the combined behavior of many relatively simple agents can result in the overall more complex (or intelligent) behavior of the system as a whole. Theoretically, this is based on the principles of [Collective Intelligence](https://en.wikipedia.org/wiki/Collective_intelligence), [Emergentism](https://en.wikipedia.org/wiki/Global_brain) and [Evolutionary Cybernetics](https://en.wikipedia.org/wiki/Global_brain), which state that higher-level systems gain some sort of added value when being properly combined from lower-level systems (so-called *principle of metasystem transition*).
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/123)
 
-The direction of **Multi-Agent Systems** has emerged in AI in 1990s as a response to growth of the Internet and distributed systems. On of the classical AI textbooks, [Artificial Intelligence: A Modern Approach](https://en.wikipedia.org/wiki/Artificial_Intelligence:_A_Modern_Approach), focuses on the view of classical AI from the point of view of Multi-agent systems.
+实现智能的一种可能方法是所谓的涌现（或协同）方法，它基于这样一个事实：许多相对简单的代理的组合行为可以导致整个系统整体上更复杂（或更智能）的行为。从理论上讲，这是基于集体智能、涌现主义和进化控制论的原则，这些原则指出，当低级系统被适当地组合成高级系统时，高级系统会获得某种附加值（所谓的元系统转换原理）。
 
-Central to Multi-agent approach is the notion of **Agent** - an entity that lives in some **environment**, which it can perceive, and act upon. This is a very broad definition, and there could be many different types and classifications of agents:
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/123)
 
-* By their ability to reason:
-   - **Reactive** agents usually have simple request-response type of behavior
-   - **Deliberative** agents employ some sort of logical reasoning and/or planning capabilities
-* By the place where agent execute its code:
-   - **Static** agents work on a dedicated network node
-   - **Mobile** agents can move their code between network nodes
-* By their behavior:
-   - **Passive agents** do not have specific goals. Such agents can react to external stimuli, but will not initiate any actions themselves. 
-   - **Active agents** have some goals which they pursue
-   - **Cognitive agents** involve complex planning and reasoning
 
-Multi-agent systems are nowadays used in a number of applications:
 
-* In games, many non-player characters employ some sort of AI, and can be considered to be intelligent agents
-* In video production, rendering complex 3D scenes that involve crowds is typically done using multi-agent simulation
-* In systems modeling, multi-agent approach is used to simulate the behavior of a complex model. For example, multi-agent approach has been successfully used to predict the spread of COVID-19 disease worldwide. Similar approach can be used to model traffic in the city, and see how it reacts to changes in traffic rules.
-* In complex automation systems, each device can act as an independent agent, which makes the whole system less monolith and more robust.
+多智能体系统方向在 20 世纪 90 年代作为对互联网和分布式系统增长的响应而出现在人工智能中。经典人工智能教科书之一《人工智能：一种现代方法》重点从多智能体系统的角度阐述了经典人工智能的观点。
 
-We will not spend a lot of time going deep into multi-agent systems, but consider one example of **Multi-Agent Modeling**.
+多智能体方法的核心是代理的概念——一个生活在某个环境中的实体，它可以感知环境并对其采取行动。这是一个非常宽泛的定义，代理可以有许多不同的类型和分类：
+
+- 按其推理能力：
+  - 反应式代理通常具有简单的请求-响应类型的行为
+  - 审议代理采用某种逻辑推理和/或规划能力
+- 根据代理执行其代码的位置：
+  - 静态代理在专用网络节点上工作
+  - 移动代理可以在网络节点之间移动其代码
+-  通过他们的行为：
+  - 被动代理没有具体目标。此类代理可以对外部刺激做出反应，但不会主动采取任何行动。
+  - 主动代理有一些目标，他们会追求这些目标
+  - 认知代理涉及复杂的规划和推理
+
+多智能体系统现今被用于许多应用中：
+
+- 在游戏中，许多非玩家角色使用某种人工智能，并且可以被认为是智能代理
+- 在视频制作中，渲染涉及人群的复杂 3D 场景通常使用多智能体模拟来完成
+- 在系统建模中，多智能体方法用于模拟复杂模型的行为。例如，多智能体方法已成功用于预测全球 COVID-19 疾病的传播。类似的方法可用于对城市交通进行建模，并观察其对交通规则变化的反应。
+- 在复杂的自动化系统中，每个设备都可以充当一个独立的智能体，这使得整个系统不那么单一，更加健壮。
+
+我们不会花很多时间深入研究多智能体系统，但考虑一个多智能体建模的示例。
 
 ## NetLogo
 
-[NetLogo](https://ccl.northwestern.edu/netlogo/) is a multi-agent modeling environment based on a modified version of the [Logo](https://en.wikipedia.org/wiki/Logo_(programming_language)) programming language. This language was developed for teaching programming concepts to kids, and it allows you to control an agent called **turtle**, which can move, leaving a trace behind. This allows creating complex geometric figures, which is a very visual way to understand the behavior of an agent.
 
-In NetLogo, we can create many turtles by using the `create-turtles` command. We can then command all turtles to do some actions (in the example below - more 10 point forward):
+
+NetLogo 是一个基于 Logo 编程语言修改版本的多主体建模环境。该语言是为教授儿童编程概念而开发的，它允许您控制一个名为乌龟的主体，它可以移动，并留下痕迹。这允许创建复杂的几何图形，这是一种非常直观的方式来理解主体的行为。
+
+在 NetLogo 中，我们可以使用 `create-turtles` 命令创建许多乌龟。然后，我们可以命令所有乌龟执行一些动作（在下面的示例中 - 向前移动 10 点）：
 
 ```
 create-turtles 10
@@ -41,39 +47,45 @@ ask turtles [
 ]
 ```
 
-Of course, it is not interesting when all turtles do the same thing, so we can `ask` groups of turtles, eg. those who are in the vicinity of a certain point. We can also create turtles of different *breeds* using `breed [cats cat]` command. Here `cat` is the name of a breed, and we need to specify both singular and plural word, because different commands use different forms for clarity.
 
-> ✅ We will not go into learning the NetLogo language itself - you can visit the brilliant [Beginner's Interactive NetLogo Dictionary](https://ccl.northwestern.edu/netlogo/bind/) resource if you are interested in learning more.
 
-You can [download](https://ccl.northwestern.edu/netlogo/download.shtml) and install NetLogo to try it.
+当然，当所有乌龟都做同样的事情时，这并不有趣，所以我们可以 `ask` 乌龟组，例如那些在某个点附近的乌龟。我们还可以使用 `breed [cats cat]` 命令创建不同品种的乌龟。这里 `cat` 是一个品种的名称，我们需要指定单数和复数词，因为不同的命令出于清晰的目的使用不同的形式。
 
-### Models Library
+> ✅ 我们不会深入学习 NetLogo 语言本身 - 如果你有兴趣了解更多，可以访问出色的初学者交互式 NetLogo 词典资源。
 
-A great thing about NetLogo is that it contains a library of working models that you can try. Go to **File &rightarrow; Models Library**, and you have many categories of models to choose from.
+您可以下载并安装 NetLogo 来尝试它。
 
-<img alt="NetLogo Models Library" src="images/NetLogo-ModelLib.png" width="60%"/>
+###  模型库
 
-> A screenshot of the models library by Dmitry Soshnikov
 
-You can open one of the models, for example **Biology &rightarrow; Flocking**.
 
-### Main Principles
+NetLogo 的一个优点是它包含一个可供您尝试的工作模型库。转到文件 → 模型库，您将有许多类别的模型可供选择。
 
-After opening the model, you are taken to the main NetLogo screen. Here is a sample model that describes the population of wolves and sheep, given finite resources (grass).
+[![NetLogo Models Library](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/6-Other/23-MultiagentSystems/images/NetLogo-ModelLib.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/23-MultiagentSystems/images/NetLogo-ModelLib.png)
 
-![NetLogo Main Screen](images/NetLogo-Main.png)
+> Dmitry Soshnikov 的模型库截图
 
-> Screenshot by Dmitry Soshnikov
+您可以打开其中一个模型，例如生物学 → 集群。
 
-On this screen, you can see:
+###  主要原则
 
-* The **Interface** section which contains:
-  - The main field, where all agents live
-  - Different controls: buttons, sliders, etc.
-  - Graphs that you can use to display parameters of the simulation
-* The **Code** tab which contains the editor, where you can type NetLogo program
 
-In most cases, the interface would have a **Setup** button, which initializes the simulation state, and a **Go** button that starts the execution. Those are handled by corresponding handlers in the code that look like this:
+
+打开模型后，您将进入 NetLogo 主屏幕。这是一个示例模型，描述了在有限资源（草）的情况下狼和羊的数量。
+
+[![NetLogo Main Screen](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/6-Other/23-MultiagentSystems/images/NetLogo-Main.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/23-MultiagentSystems/images/NetLogo-Main.png)
+
+> Dmitry Soshnikov 的屏幕截图
+
+在此屏幕上，您可以看到：
+
+- 界面部分，其中包含：
+  - 主区域，所有代理都生活在这里
+  - 不同的控件：按钮、滑块等
+  - 您可以用来显示模拟参数的图表
+- 包含编辑器的代码选项卡，您可以在其中键入 NetLogo 程序
+
+在大多数情况下，界面都会有一个设置按钮，用于初始化模拟状态，还有一个开始按钮，用于启动执行。这些由代码中类似于以下内容的相应处理程序处理：
 
 ```
 to go [
@@ -81,72 +93,87 @@ to go [
 ]
 ```
 
-NetLogo's world consists of the following objects:
 
-* **Agents** (turtles) that can move across the field and do something. You command agents by using `ask turtles [...]` syntax, and the code in brackets is executed by all agents in *turtle mode*.
-* **Patches** are square areas of the field, on which agents live. You can refer to all agents on the same patch, or you can change patch colors and some other properties. You can also `ask patches` to do something.
-* **Observer** is a unique agent that controls the world. All button handlers are executed in *observer mode*.
 
-> ✅ The beauty of a multi-agent environment is that the code that runs in turtle mode or in patch mode is executed at the same time by all agents in parallel. Thus, by writing a little code and programming the behavior of individual agent, you can create complex behavior of the simulation system as a whole.
+NetLogo 的世界包含以下对象：
 
-### Flocking
+- 可以在区域中移动并执行某些操作的代理（海龟）。您可以使用 `ask turtles [...]` 语法命令代理，并且方括号中的代码由海龟模式下的所有代理执行。
+- 补丁是字段的方形区域，其中生活着代理。您可以参考同一补丁上的所有代理，或者可以更改补丁颜色和其他一些属性。您还可以 `ask patches` 来执行某些操作。
+- 观察者是一个控制世界的独特代理。所有按钮处理程序都在观察者模式下执行。
 
-As an example of multi-agent behavior, let's consider **[Flocking](https://en.wikipedia.org/wiki/Flocking_(behavior))**. Flocking is a complex pattern that is very similar to how flocks of birds fly. Watching them fly you can think that they follow some kind of collective algorithm, or that they possess some form of *collective intelligence*. However, this complex behavior arises when each individual agent (in this case, a *bird*) only observes some other agents in a short distance from it, and follows three simple rules:
+> ✅ 多智能体环境的优点在于，在海龟模式或斑块模式下运行的代码由所有智能体同时并行执行。因此，通过编写少量代码并编程单个智能体的行为，您可以创建整个模拟系统的复杂行为。
 
-* **Alignment** - it steers towards the average heading of neighboring agents
-* **Cohesion** - it tries to steer towards the average position of neighbors (*long range attraction*)
-* **Separation** - when getting too close to other birds, it tries to move away (*short range repulsion*)
+###  结群
 
-You can run the flocking example and observe the behavior. You can also adjust parameters, such as *degree of separation*, or the *viewing range*, which defines how far each bird can see. Note that if you decrease the viewing range to 0, all birds become blind, and flocking stops. If you decrease separation to 0, all birds gather into a straight line.
 
-> ✅ Switch to the **Code** tab and see where three rules of flocking (alignment, cohesion and separation) are implemented in code. Note how we refer only to those agents that are in sight.
 
-### Other Models to see
+作为多代理行为的一个例子，让我们考虑一下群体行为。群体行为是一种复杂的模式，与鸟群的飞行方式非常相似。看着它们飞翔，您可能会认为它们遵循某种集体算法，或者它们拥有一种集体智能。然而，当每个个体代理（在这种情况下，是一只鸟）仅观察到它附近的一小段距离内的其他一些代理，并遵循三个简单的规则时，就会出现这种复杂的行为：
 
-There are a few more interesting models that you can experiment with:
+- 对齐 - 它朝向相邻代理的平均航向
+- 内聚 - 它试图转向邻居的平均位置（远距离吸引）
+- 分离 - 当离其他鸟类太近时，它会试图远离（短距离排斥）
 
-* **Art &rightarrow; Fireworks** shows how a firework can be considered a collective behavior of individual fire streams
-* **Social Science &rightarrow; Traffic Basic** and **Social Science &rightarrow; Traffic Grid** show the model of city traffic in 1D and 2D Grid with or without traffic lights. Each car in the simulation follows the following rules:
-   - If the space in front of it is empty - accelerate (up to a certain max speed)
-   - If it sees the obstacle in front - brake (and you can adjust how far a driver can see)
-* **Social Science &rightarrow; Party** shows how people group together during a cocktail party. You can find the combination of parameters that lead to the fastest increase of happiness of the group.
+您可以运行集群示例并观察行为。您还可以调整参数，例如分离度或视野范围，它定义了每只鸟可以看到多远。请注意，如果您将视野范围减小到 0，所有鸟类都会失明，并且集群会停止。如果您将分离度减小到 0，所有鸟类都会聚集到一条直线上。
 
-As you can see from these examples, multi-agent simulations can be quite a useful way to understand the behavior of a complex system consisting of individuals that follow the same or similar logic. It can also be used to control virtual agents, such as [NPCs](https://en.wikipedia.org/wiki/NPC) in computer games, or agents in 3D animated worlds.
+> ✅ 切换到代码选项卡，看看集群的三条规则（对齐、内聚和分离）如何在代码中实现。请注意，我们仅引用那些在视线范围内的代理。
 
-## Deliberative Agents
+###  其他可供查看的模型
 
-The agents described above are very simple, reacting to changes in environment using some kind of algorithm. As such they are **reactive agents**. However, sometimes agents can reason and plan their action, in which case they are called **deliberative**.
 
-A typical example would be a personal agent that receives an instruction from a human to book a vacation tour. Suppose that there are many agents that live on the internet, who can help it. It should then contact other agents to see which flights are available, what are the hotel prices for different dates, and try to negotiate the best price. When the vacation plan is complete and confirmed by the owner, it can proceed with booking.
 
-In order to do that, agents need to **communicate**. For successful communication they need:
+还有几个更有趣的模型，您可以尝试一下：
 
-* Some **standard languages to exchange knowledge**, such as [Knowledge Interchange Format](https://en.wikipedia.org/wiki/Knowledge_Interchange_Format) (KIF) and [Knowledge Query and Manipulation Language](https://en.wikipedia.org/wiki/Knowledge_Query_and_Manipulation_Language) (KQML). Those languages are designed based on [Speech Act theory](https://en.wikipedia.org/wiki/Speech_act).
-* Those languages should also include some **protocols for negotiations**, based on different **auction types**.
-* A **common ontology** to use, so that they refer to the same concepts knowing their semantics
-* A way to **discover** what different agents can do, also based on some sort of ontology
+- 艺术 → 烟花展示了烟花如何被视为单个火流的集体行为
+- 社会科学 → 交通基础和社会科学 → 交通网格显示了 1D 和 2D 网格中带或不带交通信号灯的城市交通模型。模拟中的每辆汽车都遵循以下规则：
+  - 如果它前面的空间是空的 - 加速（达到一定的最大速度）
+  - 如果它看到前面的障碍物 - 刹车（并且您可以调整驾驶员能看到多远）
+- 社会科学 → 聚会展示了人们在鸡尾酒会上如何聚在一起。您可以找到导致群体幸福感最快提升的参数组合。
 
-Deliberative agents are much more complex than reactive, because they do not only react to changes in environment, they should also be able to *intiate* actions. One of the proposed architectures for deliberative agents is the so-called Belief-Desire-Intention (BDI) agent:
+正如您从这些示例中看到的那样，多智能体模拟可以是一种非常有用的方式来理解由遵循相同或类似逻辑的个体组成的复杂系统的行为。它还可以用于控制虚拟代理，例如计算机游戏中的 NPC，或 3D 动画世界中的代理。
 
-* **Beliefs** form a set of knowledge about an agent's environment. It can be structured as a knowledge base or set of rules that an agent can apply to a specific situation in the environment.
-* **Desires** define what an agent wants to do, i.e. its goals. For example, the goal of the personal assistant agent above is to book a tour, and the goal of a hotel agent is to maximize profit.
-* **Intentions** are specific actions that an agent plans to achieve its goals. Actions typically change the environment and cause communication with other agents.
+##  审议代理
 
-There are some platforms available for building multi-agent systems, such as [JADE](https://jade.tilab.com/). [This paper](https://arxiv.org/ftp/arxiv/papers/2007/2007.08961.pdf) contains a review of multi-agent platforms, together with a brief history of multi-agent systems and their different usage scenarios.
 
-## Conclusion
 
-Multi-Agent systems can take very different forms and be used in many different applications. 
-They all tend to focus on the simpler behavior of an individual agent, and achieve more complex behavior of the overall system due to **synergetic effect**.
+上面描述的代理非常简单，使用某种算法对环境的变化做出反应。因此，它们是被动代理。然而，有时代理可以推理和计划其行动，在这种情况下，它们被称为审议代理。
 
-## 🚀 Challenge
+一个典型的例子是一个个人代理，它收到一个人预订度假旅行的指令。假设互联网上有许多可以帮助它的代理。然后，它应该联系其他代理，以查看哪些航班可用，不同日期的酒店价格是多少，并尝试协商最优惠的价格。当度假计划完成并得到所有者的确认后，它就可以继续预订。
 
-Take this lesson to the real world and try to conceptualize a multi-agent system that can solve a problem. What, for example, would a multi-agent system need to do to optimize a school bus route? How could it work in a bakery?
+为了做到这一点，代理需要进行通信。为了成功通信，他们需要：
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/223)
+- 一些标准语言来交换知识，例如知识交换格式 (KIF) 和知识查询和操作语言 (KQML)。这些语言是基于言语行为理论设计的。
+- 这些语言还应包括一些基于不同拍卖类型的谈判协议。
+- 一个通用的本体来使用，以便它们引用相同概念并了解其语义
+- 一种发现不同代理可以做什么的方法，也基于某种本体论
 
-## Review & Self Study
+审议代理比反应代理复杂得多，因为它们不仅对环境的变化做出反应，还应该能够启动行动。审议代理的一个提议架构是所谓的信念-欲望-意图 (BDI) 代理：
+
+- 信念形成了一组关于代理环境的知识。它可以被构建为知识库或一组规则，代理可以将其应用于环境中的特定情况。
+- 欲望定义了代理想要做什么，即它的目标。例如，上面个人助理代理的目标是预订旅行，而酒店代理的目标是最大化利润。
+- 意图是代理计划实现其目标的具体行动。行动通常会改变环境并导致与其他代理的通信。
+
+有一些平台可用于构建多代理系统，例如 JADE。本文包含对多代理平台的回顾，以及多代理系统及其不同使用场景的简史。
+
+##  结论
+
+
+
+多智能体系统可以采取非常不同的形式，并用于许多不同的应用。它们都倾向于关注单个智能体的更简单的行为，并由于协同效应而实现整个系统的更复杂的行为。
+
+##  🚀 挑战
+
+
+
+将此课程带入现实世界，尝试构想一个可以解决问题的多智能体系统。例如，一个多智能体系统需要做什么才能优化校车路线？它如何在面包店工作？<Keep This Symbol> 回顾此类系统在工业中的使用。选择一个领域，例如制造业或视频游戏行业，并了解如何使用多智能体系统来解决独特的问题。
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/223)
+
+
+
+##  复习与自学
+
+
 
 Review the use of this type of system in industry. Pick a domain such as manufacturing or the video game industry and discover how multi-agent systems can be used to solve unique problems.
 
-## [NetLogo Assignment](assignment.md)
+## [ NetLogo 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/23-MultiagentSystems/assignment.md)

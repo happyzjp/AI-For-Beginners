@@ -1,27 +1,39 @@
-# Classification of Oxford Pets using Transfer Learning
+# 使用迁移学习对牛津宠物进行分类
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-Imagine you need to develop and application for pet nursery to catalog all pets. One of the great features of such an application would be automatically discovering the breed from a photograph. In this assignment, we will use transfer learning to classify real-life pet images from [Oxford-IIIT](https://www.robots.ox.ac.uk/~vgg/data/pets/) pets dataset.
+人工智能初学者课程的实验作业。
 
-## The Dataset
+##  任务
 
-We will use the original [Oxford-IIIT](https://www.robots.ox.ac.uk/~vgg/data/pets/) pets dataset, which contains 35 different breeds of dogs and cats.
 
-To download the dataset, use this code snippet:
 
-```python
+想象一下，你需要开发一个宠物育儿应用来记录所有宠物。此类应用的一大特色是能自动从照片中识别出宠物的品种。在此作业中，我们将使用迁移学习对牛津-IIIT 宠物数据集中的真实宠物图像进行分类。
+
+##  数据集
+
+
+
+我们将使用原始的牛津-IIIT 宠物数据集，其中包含 35 种不同的狗和猫品种。
+
+要下载数据集，请使用此代码片段：
+
+```
 !wget https://www.robots.ox.ac.uk/~vgg/data/pets/data/images.tar.gz
 !tar xfz images.tar.gz
 !rm images.tar.gz
 ```
 
-## Stating Notebook
 
-Start the lab by opening [OxfordPets.ipynb](OxfordPets.ipynb)
 
-## Takeaway
+##  说明笔记本
 
-Transfer learning and pre-trained networks allow us to solve real-world image classification problems relatively easily. However, pre-trained networks work well on images of similar kind, and if we start classifying very different images (eg. medical images), we are likely to get much worse results.
+
+
+通过打开 OxfordPets.ipynb 来开始实验
+
+##  外卖
+
+
+
+迁移学习和预训练网络使我们能够相对轻松地解决现实世界的图像分类问题。然而，预训练网络在同类图像上效果很好，如果我们开始对非常不同的图像（例如医学图像）进行分类，我们很可能会得到更差的结果。

@@ -1,22 +1,31 @@
-# Training Mountain Car to Escape
+# 训练山地车逃逸
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-Your goal is to train the RL agent to control [Mountain Car](https://www.gymlibrary.ml/environments/classic_control/mountain_car/) in OpenAI Environment.
+人工智能初学者课程的实验作业。
 
-<img alt="Mountain Car" src="images/mountaincar.png" width="300"/>
+##  任务
 
-## The Environment
 
-Mountain Car environment consists of the car trapped inside a valley. Your goal is to jump out of the valley and reach the flag. The actions you can perform are to accelerate to the left, to the right, or do nothing. You can observe position of the car along x-axis, and velocity.
 
-## Stating Notebook
+您的目标是训练 RL 代理在 OpenAI 环境中控制山地车。
 
-Start the lab by opening [MountainCar.ipynb](MountainCar.ipynb)
+[![Mountain Car](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/6-Other/22-DeepRL/lab/images/mountaincar.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/22-DeepRL/lab/images/mountaincar.png)
 
-## Takeaway
+##  环境
 
-You should learn throughout this lab that adopting RL algorithms to a new environment is often quite straightforward, because the OpenAI Gym has the same interface for all environments, and algorithms as such do not largely depend on the nature of the environment. You can even restructure the Python code in such a way as to pass any environment to RL algorithm as a parameter.
 
+
+山地车环境由困在山谷中的汽车组成。您的目标是从山谷中跳出来并到达旗帜。您可以执行的操作是向左、向右加速或不执行任何操作。您可以观察汽车沿 x 轴的位置和速度。
+
+##  说明笔记本
+
+
+
+通过打开 MountainCar.ipynb 开始实验
+
+##  外卖
+
+
+
+您应该通过本实验了解到，将 RL 算法应用于新环境通常非常简单，因为 OpenAI Gym 对所有环境都具有相同的界面，并且算法本身在很大程度上不依赖于环境的性质。您甚至可以重新构建 Python 代码，以便将任何环境作为参数传递给 RL 算法。

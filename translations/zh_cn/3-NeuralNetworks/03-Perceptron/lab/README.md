@@ -1,19 +1,25 @@
-# Multi-Class Classification with Perceptron
+# 感知器多分类
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-Using the code we have developed in this lesson for binary classification of MNIST handwritten digits, create a multi-class classified that would be able to recognize any digit. Compute the classification accuracy on the train and test dataset, and print out the confusion matrix.
+人工智能初学者课程的实验作业。
 
-## Hints
+## 任务
 
-1. For each digit, create a dataset for binary classifier of "this digit vs. all other digits"
-1. Train 10 different perceptrons for binary classification (one for each digit)
-1. Define a function that will classify an input digit
+使用我们在本课程中为 MNIST 手写数字二元分类开发的代码，创建一个多类分类器，能够识别任何数字。计算训练和测试数据集上的分类准确度，并打印混淆矩阵。
 
-> **Hint**: If we combine weights of all 10 perceptrons into one matrix, we should be able to apply all 10 perceptrons to the input digits by one matrix multiplication. Most probable digit can then be found just by applying `argmax` operation on the output.
+##  提示
 
-## Stating Notebook
 
-Start the lab by opening [PerceptronMultiClass.ipynb](PerceptronMultiClass.ipynb)
+
+1. 对于每个数字，为“该数字与所有其他数字”的二元分类器创建一个数据集
+2. 训练 10 个不同的感知器进行二元分类（每个数字一个）
+3. 定义一个函数来对输入数字进行分类
+
+> 提示：如果我们将所有 10 个感知器的权重组合到一个矩阵中，我们应该能够通过一次矩阵乘法将所有 10 个感知器应用于输入数字。然后可以通过对输出应用 `argmax` 操作来找到最可能的数字。
+
+##  说明笔记本
+
+
+
+通过打开 PerceptronMultiClass.ipynb 来启动实验

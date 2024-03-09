@@ -1,77 +1,97 @@
-# Genetic Algorithms
+# 遗传算法
 
-## [Pre-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/121)
 
-**Genetic Algorithms** (GA) are based on an **evolutionary approach** to AI, in which methods of the evolution of a population is used to obtain an optimal solution for a given problem. They were proposed in 1975 by [John Henry Holland](https://wikipedia.org/wiki/John_Henry_Holland).
 
-Genetic Algorithms are based on the following ideas:
+## [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/121)
 
-* Valid solutions to the problem can be represented as **genes**
-* **Crossover** allows us to combine two solutions together to obtain a new valid solution
-* **Selection** is used to select more optimal solutions using some **fitness function**
-* **Mutations** are introduced to destabilize optimization and get us out of the local minimum
 
-If you want to implement a Genetic Algorithm, you need the following:
 
- * To find a method of coding our problem solutions using **genes** g&in;&Gamma;
- * On the set of genes &Gamma; we need to define **fitness function** fit: &Gamma;&rightarrow;**R**. Smaller function values correspond to better solutions.
- * To define **crossover** mechanism to combine two genes together to get a new valid solution crossover: &Gamma;<sup>2</sub>&rightarrow;&Gamma;.
- * To define **mutation** mechanism mutate: &Gamma;&rightarrow;&Gamma;.
+遗传算法 (GA) 基于 AI 的进化方法，其中使用种群进化的方式来获得给定问题的最优解。它们是由 John Henry Holland 在 1975 年提出的。
 
-In many cases, crossover and mutation are quite simple algorithms to manipulate genes as numeric sequences or bit vectors.
+遗传算法基于以下思想：
 
-The specific implementation of a genetic algorithm can vary from case to case, but the overall structure is the following:
+- 问题的有效解可以表示为基因
+- 交叉允许我们组合两个解以获得一个新的有效解
+- 选择用于使用一些适应度函数选择更优的解
+- 引入突变以破坏优化并使我们摆脱局部最小值
 
-1. Select an initial population G&subset;&Gamma;
-2. Randomly select one of the operations that will be performed at this step: crossover or mutation
-3. **Crossover**:
-  * Randomly select two genes g<sub>1</sub>, g<sub>2</sub> &in; G
-  * Compute crossover g=crossover(g<sub>1</sub>,g<sub>2</sub>)
-  * If fit(g)<fit(g<sub>1</sub>) or fit(g)<fit(g<sub>2</sub>) - replace corresponding gene in the population by g.
-4. **Mutation** - select random gene g&in;G and replace it by mutate(g)
-5. Repeat from step 2, until we get a sufficiently small value of fit, or until the limit on the number of steps is reached.
+如果您想实现遗传算法，您需要以下内容：
 
-## Typical Tasks
+- 找到使用基因 g∈Γ 对我们的问题解进行编码的方法
+- 在基因集 Γ 上，我们需要定义适应度函数 fit: Γ→R。较小的函数值对应于更好的解。
+- 定义交叉机制以组合两个基因以获得新的有效解 crossover: Γ 2→Γ.
+- 定义突变机制突变：Γ→Γ。
 
-Tasks typically solved by Genetic Algorithms include:
+在许多情况下，交叉和变异是相当简单的算法，可以将基因作为数字序列或位向量进行操作。
 
-1. Schedule optimization
-1. Optimal packing
-1. Optimal cutting
-1. Speeding up exhaustive search
+遗传算法的具体实现可能因情况而异，但总体结构如下：
 
-## ✍️ Exercises: Genetic Algorithms
+1. 选择一个初始种群 G⊂Γ
+2. 随机选择一个将在本步骤执行的操作：交叉或变异
+3.  交叉：
 
-Continue your learning in the following notebooks:
+- 
+- 
+- 如果 fit(g) ) 或 fit(g) ) - 用 g 替换种群中相应的基因。
 
-Go to [this notebook](Genetic.ipynb) to see two examples of using Genetic Algorithms:
+1. 突变 - 随机选择基因 g∈G 并用 mutate(g) 替换它
+2. 重复步骤 2，直到我们获得足够小的拟合值，或者达到步骤数限制。
 
-1. Fair division of treasure
-1. 8 Queens Problem
+##  典型任务
 
-## Conclusion
 
-Genetic Algorithms are used to solve many problems, including logistics and search problems. The field is Inspired by research that merged topics in Psychology and Computer Science. 
 
-## 🚀 Challenge
+遗传算法通常解决的任务包括：
 
-"Genetic algorithms are simple to implement, but their behavior is difficult to understand." [source](https://wikipedia.org/wiki/Genetic_algorithm) Do some research to find an implementation of a genetic algorithm such as solving a Sudoku puzzle, and explain how it works as a sketch or flowchart.
+1.  日程优化
+2.  最优装箱
+3.  最优裁剪
+4. 加速穷举搜索
 
-## [Post-lecture quiz](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/221)
+## ✍️ Exercises: Genetic Algorithms 
 
-## Review & Self Study
 
-Watch [this great video](https://www.youtube.com/watch?v=qv6UVOQ0F44) talking about how computer can learn to play Super Mario using neural networks trained by genetic algorithms. We will learn more about computer learning to play games like that [in the next section](../22-DeepRL/README.md).
 
-## [Assignment: Diophantine Equation](Diophantine.ipynb)
+在以下笔记本中继续学习：
 
-Your goal is to solve so-called **Diophantine equation** - an equation with integer roots. For example, consider the equation a+2b+3c+4d=30. You need to find the integer roots that satisfy this equation.
+转到此笔记本以查看使用遗传算法的两个示例：
 
-*This assignment is inspired by [this post](https://habr.com/post/128704/).*
+1. 公平分配宝藏
+2.  8 皇后问题
 
-Hints:
+##  结论
 
-1. You can consider roots to be in the interval [0;30]
-1. As a gene, consider using the list of root values
 
-Use [Diophantine.ipynb](Diophantine.ipynb) as a starting point.
+
+遗传算法用于解决许多问题，包括物流和搜索问题。该领域受到心理学和计算机科学中合并主题的研究的启发。
+
+##  🚀 挑战
+
+
+
+“遗传算法易于实现，但其行为难以理解。”来源 做一些研究以找到遗传算法的实现，例如解决数独谜题，并解释它是如何作为草图或流程图工作的。
+
+## [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/221)
+
+
+
+##  复习与自学
+
+
+
+观看此精彩视频，了解计算机如何使用由遗传算法训练的神经网络学习玩超级马里奥。我们将在下一节中了解有关计算机学习玩此类游戏的更多信息。
+
+## [作业：丢番图方程](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/6-Other/21-GeneticAlgorithms/Diophantine.ipynb)
+
+
+
+你的目标是解决所谓的丢番图方程——一个具有整数根的方程。例如，考虑方程 a+2b+3c+4d=30。你需要找到满足此方程的整数根。
+
+*此作业的灵感来自此帖子。*
+
+ 提示：
+
+1. 你可以考虑根在区间 [0;30] 内
+2. 作为基因，考虑使用根值列表
+
+使用 Diophantine.ipynb 作为起点。

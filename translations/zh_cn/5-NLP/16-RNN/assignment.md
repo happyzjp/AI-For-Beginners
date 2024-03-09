@@ -1,3 +1,5 @@
-# Assignment: Notebooks
+# 作业：Notebooks
 
-Using the notebooks associated to this lesson (either the PyTorch or the TensorFlow version), rerun them using your own dataset, perhaps one from Kaggle, used with attribution. Rewrite the notebook to underline your own findings. Try a different kind of dataset and document your findings, using text such as [this Kaggle competition dataset about weather tweets](https://www.kaggle.com/competitions/crowdflower-weather-twitter/data?select=train.csv).
+
+
+使用与本课程相关的笔记本（PyTorch 或 TensorFlow 版本），使用您自己的数据集（可能是 Kaggle 上的数据集，注明出处）重新运行它们。重写笔记本以强调您自己的发现。尝试使用不同类型的数据集，并记录您的发现，使用诸如 Kaggle 上关于天气推文的竞赛数据集之类的文本。

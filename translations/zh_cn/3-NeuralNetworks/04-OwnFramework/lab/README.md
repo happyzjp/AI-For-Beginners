@@ -1,20 +1,28 @@
-# MNIST Classification with Our Own Framework
+# 使用我们自己的框架进行 MNIST 分类
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-Solve the MNIST handwritten digit classification problem using 1-, 2- and 3-layered perceptron. Use the neural network framework we have developed in the lesson.
+人工智能初学者课程的实验作业。
 
-## Stating Notebook
+##  任务
 
-Start the lab by opening [MyFW_MNIST.ipynb](MyFW_MNIST.ipynb)
 
-## Questions
 
-As a result of this lab, try to answer the following questions:
+使用 1、2 和 3 层感知器解决 MNIST 手写数字分类问题。使用我们在课程中开发的神经网络框架。
 
-- Does the inter-layer activation function affect network performance?
-- Do we need 2- or 3-layered network for this task?
-- Did you experience any problems training the network? Especially as the number of layers increased.
-- How do weights of the network behave during training? You may plot max abs value of weights vs. epoch to understand the relation.
+##  说明笔记本
+
+
+
+通过打开 MyFW_MNIST.ipynb 开始实验
+
+##  问题
+
+
+
+作为本实验的结果，尝试回答以下问题：
+
+- 层间激活函数是否会影响网络性能？
+- 对于此任务，我们需要 2 层还是 3 层网络？
+- 您在训练网络时遇到任何问题吗？特别是随着层数的增加。
+- 网络的权重在训练期间如何表现？您可以绘制权重的最大绝对值与历元的关系图，以了解它们之间的关系。

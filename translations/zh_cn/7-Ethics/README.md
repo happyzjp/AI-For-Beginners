@@ -1,40 +1,49 @@
-# Ethical and Responsible AI
+# 道德和负责任的人工智能
 
-You have almost finished this course, and I hope that by now you clearly see that AI is based on a number of formal mathematical methods that allow us to find relationships in data and train models to replicate some aspects of human behavior. At this point in history, we consider AI to be a very powerful tool to extract patterns from data, and to apply those patterns to solve new problems.
 
-## [Pre-lecture quiz](https://white-water-09ec41f0f.azurestaticapps.net/quiz/5/)
 
-However, in science fiction we often see stories where AI presents a danger to humankind. Usually those stories are centered around some sort of AI rebellion, when AI decides to confront human beings. This implies that AI has some sort of emotion or can take decisions unforeseen by its developers.
+您已经快完成本课程了，我希望到目前为止您已经清楚地看到，人工智能基于许多形式化的数学方法，这些方法使我们能够在数据中找到关系并训练模型以复制人类行为的某些方面。在历史的这个阶段，我们认为人工智能是一种从数据中提取模式并应用这些模式来解决新问题的非常强大的工具。
 
-The kind of AI that we have learned about in this course is nothing more than large matrix arithmetic. It is a very powerful tool to help us solve our problems, and as any other powerful tool - it can be used for good and for bad purposes. Importantly, it can be *misused*.
+## [ 课前测验](https://white-water-09ec41f0f.azurestaticapps.net/quiz/5/)
 
-## Principles of Responsible AI
 
-To avoid this accidental or purposeful misuse of AI, Microsoft states the important [Principles of Responsible AI](https://www.microsoft.com/ai/responsible-ai?WT.mc_id=academic-77998-cacaste). The following concepts underpin these principles:
 
-* **Fairness** is related to the important problem of *model biases*, which can be caused by using biased data for training. For example, when we try to predict the probability of getting a software developer job for a person, the model is likely to give higher preference to males - just because the training dataset was likely biased towards a male audience. We need to carefully balance training data and investigate the model to avoid biases, and make sure that the model takes into account more relevant features.
-* **Reliability and Safety**. By their nature, AI models can make mistakes. A neural network returns probabilities, and we need to take it into account when making decisions. Every model has some precision and recall, and we need to understand that to prevent harm that wrong advice can cause.
-* **Privacy and Security** have some AI-specific implications. For example, when we use some data for training a model, this data becomes somehow "integrated" into the model. On one hand, that increases security and privacy, on the other - we need to remember which data the model was trained on.
-* **Inclusiveness** means that we are not building AI to replace people, but rather to augment people and make our work more creative. It is also related to fairness, because when dealing with underrepresented communities, most of the datasets we collect are likely to be biased, and we need to make sure that those communities are included and correctly handled by AI.
-* **Transparency**. This includes making sure that we are always clear about AI being used. Also, wherever possible, we want to use AI systems that are *interpretable*.
-* **Accountability**. When AI models come up with some decisions, it is not always clear who is responsible for those decisions. We need to make sure that we understand where responsibility of AI decisions lies. In most cases we would want to include human beings into the loop of making important decisions, so that actual people are made accountable.
+然而，在科幻小说中，我们经常看到人工智能对人类构成危险的故事。通常，这些故事都围绕着某种人工智能叛乱展开，即人工智能决定对抗人类。这意味着人工智能具有一定的情感或可以做出其开发者无法预见到的决定。
 
-## Tools for Responsible AI
+我们在本课程中了解到的人工智能只不过是大型矩阵运算。它是一个非常强大的工具，可以帮助我们解决问题，就像任何其他强大的工具一样——它可以用于好的和坏的目的。重要的是，它可能会被滥用。
 
-Microsoft has developed the [Responsible AI Toolbox](https://github.com/microsoft/responsible-ai-toolbox) which contains a set of tools:
+## 负责任的人工智能原则
 
-* Interpretability Dashboard (InterpretML)
-* Fairness Dashboard (FairLearn)
-* Error Analysis Dashboard
-* Responsible AI Dashboard that includes
 
-   - EconML - tool for Causal Analysis, which focuses on what-if questions
-   - DiCE - tool for Counterfactual Analysis allows you to see which features need to be changed to affect the decision of the model
 
-For more information about AI Ethics, please visit [this lesson](https://github.com/microsoft/ML-For-Beginners/tree/main/1-Introduction/3-fairness?WT.mc_id=academic-77998-cacaste) on the Machine Learning Curriculum which includes assignments.
 
-## Review & Self Study
 
-Take this [Learn Path](https://docs.microsoft.com/learn/modules/responsible-ai-principles/?WT.mc_id=academic-77998-cacaste) to learn more about responsible AI.
+- 
+- 
+- 隐私和安全性有一些特定于人工智能的影响。例如，当我们使用一些数据来训练模型时，这些数据在某种程度上会“集成”到模型中。一方面，这增加了安全性和隐私性，另一方面 - 我们需要记住模型接受了哪些数据的训练。
+- 包容性意味着我们构建人工智能不是为了取代人，而是为了增强人的能力，让我们的工作更具创造性。它还与公平性有关，因为在处理代表性不足的社区时，我们收集的大多数数据集都可能存在偏差，我们需要确保人工智能包含这些社区并正确处理这些社区。
+- 透明度。这包括确保我们始终清楚人工智能的使用。此外，在可能的情况下，我们希望使用可解释的人工智能系统。
+- 问责制。当人工智能模型做出一些决策时，并不总是清楚谁对这些决策负责。我们需要确保我们了解人工智能决策的责任归属。在大多数情况下，我们希望将人类纳入做出重要决策的循环中，以便追究实际人员的责任。
 
-## [Post-lecture quiz](https://white-water-09ec41f0f.azurestaticapps.net/quiz/6/)
+##  负责任的人工智能工具
+
+
+
+Microsoft 已开发了负责任的人工智能工具箱，其中包含一组工具：
+
+- 可解释性仪表盘 (InterpretML)
+- 公平性仪表盘 (FairLearn)
+- 错误分析仪表盘
+- 包含以下内容的负责任 AI 仪表板
+  - EconML - 因果分析工具，重点关注假设性问题
+  - DiCE - 反事实分析工具，允许您查看需要更改哪些特征才能影响模型的决策
+
+有关 AI 伦理的更多信息，请访问机器学习课程中的此课程，其中包括作业。
+
+##  复习与自学
+
+
+
+学习此学习路径以了解有关负责任 AI 的更多信息。
+
+## [ 课后测验](https://white-water-09ec41f0f.azurestaticapps.net/quiz/6/)

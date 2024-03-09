@@ -1,3 +1,5 @@
-# Assignment: Notebooks
+# 作业：笔记本
 
-Using the notebooks associated to this lesson (either the PyTorch or the TensorFlow version), rerun them using your own dataset, perhaps one from Kaggle, used with attribution. Rewrite the notebook to underline your own findings. Try a different kind of dataset and document your findings, using text such as [these Beatles lyrics](https://www.kaggle.com/datasets/jenlooper/beatles-lyrics).
+
+
+使用与本课程关联的笔记本（PyTorch 或 TensorFlow 版本），使用您自己的数据集重新运行它们，也许是来自 Kaggle 的数据集，并注明出处。重写笔记本以强调您自己的发现。尝试使用不同类型的数据集，并使用诸如这些披头士歌词之类的文本记录您的发现。

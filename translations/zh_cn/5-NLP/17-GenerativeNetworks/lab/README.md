@@ -1,12 +1,17 @@
-# Word-level Text Generation using RNNs
+# 使用 RNN 进行单词级文本生成
 
-Lab Assignment from [AI for Beginners Curriculum](https://github.com/microsoft/ai-for-beginners).
 
-## Task
 
-In this lab, you need to take any book, and use it as a dataset to train word-level text generator.
+人工智能初学者课程的实验作业。
 
-## The Dataset
+##  任务
 
-You are welcome to use any book. You can find a lot of free texts at [Project Gutenberg](https://www.gutenberg.org/), for example, here is a direct link to [Alice's Adventures in Wonderland](https://www.gutenberg.org/files/11/11-0.txt)) by Lewis Carroll.
 
+
+在本实验中，您需要选取任意一本书，并将其用作数据集来训练单词级文本生成器。
+
+##  数据集
+
+
+
+欢迎您使用任何书籍。您可以在古腾堡计划中找到大量免费文本，例如，这里有刘易斯·卡罗尔所著《爱丽丝漫游仙境》的直接链接。
