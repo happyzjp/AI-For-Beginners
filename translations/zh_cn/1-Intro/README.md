@@ -35,7 +35,7 @@
 
 更多信息请参阅 [人工通用智能](https://en.wikipedia.org/wiki/Artificial_general_intelligence)（AGI）。
 
-##### 智能的定义和图灵测试
+### 智能的定义和图灵测试
 
 [
 智能](https://en.wikipedia.org/wiki/Intelligence) 这个术语的一个问题是没有明确的定义。有人认为智能与**抽象思维**或**自我意识**有关，但我们无法对其进行恰当的定义。

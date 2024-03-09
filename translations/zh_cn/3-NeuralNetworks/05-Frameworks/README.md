@@ -5,7 +5,7 @@
 - **操作张量**: 例如进行乘法、加法以及计算一些函数，例如 sigmoid 函数或 softmax 函数。
 - **计算所有表达式的梯度**: 为了执行梯度下降优化算法。
 
-##### [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/105)
+### [ 课前测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/105)
 
 虽然 `numpy` 库可以完成第一部分，但我们需要一些机制来计算梯度。在我们上一节中开发的[框架](https://chat.openai.com/04-OwnFramework/OwnFramework.ipynb)中，我们必须在 `backward` 方法中手动编写所有导数函数，该方法执行反向传播。理想情况下，一个框架应该让我们有机会计算我们能定义的任何表达式的梯度。
 
@@ -27,13 +27,13 @@
 
 还需要理解的一点是，你可以同时使用这两种API，例如，你可以使用低级API开发自己的网络层架构，然后在使用高级API构建和训练的较大网络中使用它。或者，你可以使用高级API将网络定义为层序列，然后使用自己的低级训练循环执行优化。这两种API使用相同的基本概念，并且它们被设计成能够很好地协同工作。
 
-#####  学习
+###  学习
 
 在本课程中，我们为 PyTorch 和 TensorFlow 提供了大部分内容。你可以选择喜欢的框架，只浏览相应的 notebooks。如果不确定选择哪个框架，请阅读互联网上关于**PyTorch与TensorFlow** 的一些讨论。还可以查看这两个框架以获得更好的理解。
 
 在可能的情况下，我们将使用高级 API 以简化操作。但是，我们认为了解神经网络从底层开始的工作原理非常重要，因此一开始我们从使用低级 API 和张量开始。但是，如果你想快速上手，并且不想花很多时间学习这些细节，你可以跳过这些内容，直接进入 notebooks 的 高级 API 部分。
 
-#####  ✍️ 练习：框架
+###  ✍️ 练习：框架
 
 在以下 notebooks 中继续学习：
 
@@ -43,7 +43,7 @@
 
 掌握框架后，让我们回顾一下过拟合的概念。
 
-#####  过拟合
+###  过拟合
 
 过拟合是机器学习中一个非常重要的概念，正确理解它非常重要！
 
@@ -60,19 +60,19 @@
 
 在模型的丰富性（参数数量）和训练样本数量之间取得正确的平衡非常重要。
 
-#####  为什么会出现过拟合
+###  为什么会出现过拟合
 
 - 训练数据不足
 -  模型过于强大
 - 输入数据中噪声太多
 
-##### 如何检测过拟合
+### 如何检测过拟合
 
 从上面的图表中可以看到，过拟合可以通过非常低的训练误差和较高的验证误差来检测。通常在训练期间，我们会看到训练和验证误差都开始下降，然后在某个时刻验证误差可能会停止下降并开始上升。这将是过拟合的标志，并且表明我们可能应该在此时停止训练（或至少对模型进行快照）。
 
 [![overfitting](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/3-NeuralNetworks/images/Overfitting.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/images/Overfitting.png)
 
-##### 如何防止过拟合
+### 如何防止过拟合
 
 如果你发现发生了过拟合，可以采取以下措施：
 
@@ -80,7 +80,7 @@
 - 降低模型的复杂度
 - 使用一些正则化技术，例如 Dropout，我们将在后面考虑。
 
-##### 过拟合和偏差-方差权衡
+### 过拟合和偏差-方差权衡
 
 过拟合实际上是统计学中一个更通用问题的一个案例，称为[偏差-方差平衡](https://en.wikipedia.org/wiki/Bias–variance_tradeoff)。如果我们考虑模型中可能的误差来源，我们可以看到两种类型的误差：
 
@@ -89,17 +89,17 @@
 
 在训练期间，偏差误差会减小（因为我们的模型学会了逼近数据），而方差误差会增加。重要的是停止训练 - 手动（当我们检测到过拟合时）或自动（通过引入正则化） - 以防止过拟合。
 
-#####  结论
+###  结论
 
 在本课程中，你学到了两种最流行的 AI 框架 TensorFlow 和 PyTorch 的各种 API 之间的差异。此外，你还了解了一个非常重要的主题，即过拟合。
 
-#####  🚀 挑战
+###  🚀 挑战
 
 在附带的笔记本中，你将在底部找到“任务”；逐步完成这些 notebooks 中的任务。
 
-##### [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/205)
+### [ 课后测验](https://red-field-0a6ddfd03.1.azurestaticapps.net/quiz/205)
 
-#####  复习与自学
+###  复习与自学
 
 对以下主题进行一些研究：
 
@@ -112,7 +112,7 @@
 - TensorFlow 和 PyTorch 有什么区别？
 - 过拟合和欠拟合有什么区别？
 
-##### [ 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/lab/README.md)
+### [ 作业](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/3-NeuralNetworks/05-Frameworks/lab/README.md)
 
 在本实验中，要求你使用 PyTorch 或 TensorFlow 使用单层和多层全连接网络解决两个分类问题。
 
