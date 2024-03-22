@@ -177,5 +177,5 @@
   - [物联网入门](https://aka.ms/iot-beginners)
   - [机器学习入门](https://aka.ms/ml-beginners)
   - [扩展现实开发入门](https://aka.ms/xr-dev-for-beginners)
-  - [精通GitHub Copilot的AI配对编程](
+  - [精通GitHub Copilot的AI配对编程](https://aka.ms/GitHubCopilotAI)
 
