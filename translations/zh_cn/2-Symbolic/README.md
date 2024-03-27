@@ -1,4 +1,4 @@
-### 知识表示和专家系统
+# 知识表示和专家系统
 
 [![Summary of Symbolic AI content](https://github.com/happyzjp/AI-For-Beginners/raw/main/translations/zh_cn/sketchnotes/ai-symbolic.png)](https://github.com/happyzjp/AI-For-Beginners/blob/main/translations/zh_cn/sketchnotes/ai-symbolic.png)
 
